@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第8課自學特快車：八歲，一個人去旅行</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fdf4ff 100%);
+            min-height: 100vh;
+        }
+        .tab-btn.active {
+            background-color: #f59e0b;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+        /* Custom Scrollbar for vocabulary box */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px;}
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px;}
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* 動畫特效 */
+        .train-move {
+            animation: train-move 3s linear infinite;
+        }
+        @keyframes train-move {
+            0% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(-10px); }
+        }
+    </style>
+</head>
+<body class="text-gray-800 pb-10">
+
+    <!-- 頂部標題區 -->
+    <header class="bg-white shadow-sm py-4 mb-6 sticky top-0 z-50 rounded-b-3xl">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-2xl md:text-4xl font-black text-blue-600 tracking-wide flex justify-center items-center gap-2">
+                <span class="train-move inline-block">🚂</span> 第8課自學特快車 <span class="text-orange-500 text-xl md:text-3xl">八歲，一個人去旅行</span> 🎒
+            </h1>
+        </div>
+        <!-- 導航分頁 -->
+        <div class="flex flex-wrap justify-center gap-2 mt-4 px-2">
+            <button onclick="switchTab('tab-summary')" id="btn-tab-summary" class="tab-btn active px-4 py-2 rounded-full font-bold text-orange-600 bg-orange-100 transition-all duration-300">📖 課文重點</button>
+            <button onclick="switchTab('tab-vocab')" id="btn-tab-vocab" class="tab-btn px-4 py-2 rounded-full font-bold text-green-600 bg-green-100 transition-all duration-300">💎 字詞寶庫</button>
+            <button onclick="switchTab('tab-skills')" id="btn-tab-skills" class="tab-btn px-4 py-2 rounded-full font-bold text-purple-600 bg-purple-100 transition-all duration-300">🦸 閱讀秘笈</button>
+            <button onclick="switchTab('tab-quiz')" id="btn-tab-quiz" class="tab-btn px-4 py-2 rounded-full font-bold text-red-600 bg-red-100 transition-all duration-300 animate-pulse">🎯 終極挑戰</button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 max-w-4xl">
+
+        <!-- ==================== 標籤 1：課文重點 ==================== -->
+        <section id="tab-summary" class="space-y-6">
+            <!-- 【圖例新增】旅行路線圖 -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border-t-8 border-blue-400">
+                <h2 class="text-2xl font-bold mb-4 text-blue-700 text-center">🗺️ 圖解：八歲的旅行任務</h2>
+                <div class="flex flex-col md:flex-row items-center justify-between bg-blue-50 p-6 rounded-2xl relative">
+                    <div class="text-center z-10">
+                        <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-md mb-2 mx-auto">🏠</div>
+                        <div class="font-bold text-blue-800">出發點</div>
+                        <div class="text-sm text-gray-500">家裡 (爸爸指派)</div>
+                    </div>
+                    <div class="flex-1 w-full md:w-auto flex items-center justify-center py-4 md:py-0">
+                        <div class="border-l-4 md:border-l-0 md:border-t-4 border-dashed border-blue-300 h-16 md:h-0 w-0 md:w-full mx-auto relative">
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl train-move bg-blue-50 px-2">🚂</div>
+                        </div>
+                    </div>
+                    <div class="text-center z-10">
+                        <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-md mb-2 mx-auto">👵</div>
+                        <div class="font-bold text-blue-800">火車上</div>
+                        <div class="text-sm text-gray-500">遇見老婆婆</div>
+                    </div>
+                    <div class="flex-1 w-full md:w-auto flex items-center justify-center py-4 md:py-0">
+                        <div class="border-l-4 md:border-l-0 md:border-t-4 border-dashed border-blue-300 h-16 md:h-0 w-0 md:w-full mx-auto relative"></div>
+                    </div>
+                    <div class="text-center z-10">
+                        <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-md mb-2 mx-auto">☔</div>
+                        <div class="font-bold text-blue-800">目的地</div>
+                        <div class="text-sm text-gray-500">宜蘭 (拿祖母的傘)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 一句話重點 -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border-l-8 border-blue-400 card-hover transition-transform duration-300">
+                <h2 class="text-2xl font-bold mb-3 text-blue-700 flex items-center"><span class="text-3xl mr-2">💡</span>課文一句話重點</h2>
+                <p class="text-lg leading-relaxed bg-blue-50 p-4 rounded-xl text-gray-700">
+                    作者回憶自己八歲時，獨自坐火車到宜蘭拿回祖母的傘，在火車上遇見一位友善老婆婆，後來老婆婆昏倒，主角勇敢呼救，最後回到家時，彷彿在祖母臉上看見火車上老婆婆的影子。
+                </p>
+                <div class="mt-4 bg-orange-50 p-3 rounded-lg border-l-4 border-orange-400">
+                    <strong class="text-orange-600">🎯 老師說主旨：</strong>一次獨自旅行，讓孩子學會勇敢、關心他人，也感受到偶然相遇的陌生人帶來的溫暖。
+                </div>
+            </div>
+
+            <!-- 【圖例新增】角色檔案卡 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gradient-to-br from-indigo-50 to-blue-100 rounded-3xl p-6 shadow-md">
+                    <div class="flex items-center gap-4 border-b-2 border-blue-200 pb-3 mb-3">
+                        <div class="text-5xl">👦</div>
+                        <h3 class="text-xl font-bold text-blue-800">主角：八歲的我</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-700 font-bold">
+                        <li>🎒 <span class="text-blue-600">裝備：</span>一盒萬金油</li>
+                        <li>🎯 <span class="text-blue-600">任務：</span>拿回祖母的雨傘</li>
+                        <li>❤️ <span class="text-blue-600">特質：</span>從不安到挺身而出的「勇敢」</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-pink-50 to-red-100 rounded-3xl p-6 shadow-md">
+                    <div class="flex items-center gap-4 border-b-2 border-red-200 pb-3 mb-3">
+                        <div class="text-5xl">👵</div>
+                        <h3 class="text-xl font-bold text-red-800">火車上的老婆婆</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-700 font-bold">
+                        <li>👀 <span class="text-red-600">外表：</span>凹癟的嘴不停嚼著</li>
+                        <li>🍐 <span class="text-red-600">動作：</span>請主角吃酸甜的芭樂</li>
+                        <li>👃 <span class="text-red-600">氣味：</span>散發著「苦茶油幽香」</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 故事發展圖 -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border-t-8 border-green-400">
+                <h2 class="text-2xl font-bold mb-4 text-green-700 text-center">📈 故事發展圖 (超強記憶法)</h2>
+                <div class="flex flex-col items-center space-y-2 text-lg font-bold">
+                    <div class="bg-blue-100 w-full max-w-sm text-center py-2 rounded-full text-blue-800 shadow-sm">1. 🚂 出發：爸爸要我一個人去宜蘭</div>
+                    <div class="text-gray-400">⬇️</div>
+                    <div class="bg-gray-100 w-full max-w-sm text-center py-2 rounded-full text-gray-700 shadow-sm">2. 😟 害怕：遇見凹癟嘴的老婆婆</div>
+                    <div class="text-gray-400">⬇️</div>
+                    <div class="bg-green-100 w-full max-w-sm text-center py-2 rounded-full text-green-800 shadow-sm">3. 🍐 放心：收到芭樂，聞到祖母味</div>
+                    <div class="text-gray-400">⬇️</div>
+                    <div class="bg-purple-100 w-full max-w-sm text-center py-2 rounded-full text-purple-800 shadow-sm">4. 😱 緊張：老婆婆突然倒在腿上</div>
+                    <div class="text-gray-400">⬇️</div>
+                    <div class="bg-red-100 w-full max-w-sm text-center py-2 rounded-full text-red-800 shadow-sm">5. 📣 勇敢：大喊「救人呵！」</div>
+                    <div class="text-gray-400">⬇️</div>
+                    <div class="bg-pink-100 w-full max-w-sm text-center py-2 rounded-full text-pink-800 shadow-sm">6. ❤️ 溫暖：大家幫忙，老婆婆醒來</div>
+                    <div class="text-gray-400">⬇️</div>
+                    <div class="bg-yellow-100 w-full max-w-sm text-center py-2 rounded-full text-yellow-800 shadow-sm">7. 🌙 回家：祖母的臉變成老婆婆</div>
+                </div>
+                <div class="mt-6 text-center bg-yellow-50 py-3 rounded-xl text-yellow-800 font-bold border-2 border-yellow-200">
+                    📣 記憶口訣：出發害怕，聞香放心；阿嬤昏倒，勇敢呼救；人情溫暖，回家重疊。
+                </div>
+            </div>
+
+            <!-- 心電圖 -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border-l-8 border-pink-400">
+                <h2 class="text-2xl font-bold mb-4 text-pink-700">💗 主角情緒推論心電圖</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-pink-100 text-pink-800">
+                                <th class="p-3 rounded-tl-xl w-1/4">情緒</th>
+                                <th class="p-3 w-1/2">🕵️‍♂️ 文本線索 (表情/動作/對話)</th>
+                                <th class="p-3 rounded-tr-xl w-1/4">💡 怎麼推論</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-pink-50">
+                            <tr><td class="p-3 font-bold text-gray-700 text-lg">😳 驚訝</td><td class="p-3">爸爸突然要他自己坐火車</td><td class="p-3 text-gray-600">事情來得太突然</td></tr>
+                            <tr class="bg-pink-50"><td class="p-3 font-bold text-gray-700 text-lg">😟 不安</td><td class="p-3">只有萬金油，什麼也沒有</td><td class="p-3 text-gray-600">第一次獨自出門</td></tr>
+                            <tr><td class="p-3 font-bold text-gray-700 text-lg">😨 害怕</td><td class="p-3">老婆婆凹癟的嘴不停嚼著</td><td class="p-3 text-gray-600">外貌讓他緊張</td></tr>
+                            <tr class="bg-pink-50"><td class="p-3 font-bold text-gray-700 text-lg">🙂 放心</td><td class="p-3">聞到苦茶油幽香</td><td class="p-3 text-gray-600">想到祖母的味道</td></tr>
+                            <tr><td class="p-3 font-bold text-gray-700 text-lg">😱 緊張</td><td class="p-3">老婆婆倒在腿上</td><td class="p-3 text-gray-600">不知道怎麼辦</td></tr>
+                            <tr class="bg-pink-50"><td class="p-3 font-bold text-gray-700 text-lg">💪 勇敢</td><td class="p-3">大喊救人</td><td class="p-3 text-gray-600">從害怕變成行動</td></tr>
+                            <tr><td class="p-3 font-bold text-gray-700 text-lg">🥹 感動</td><td class="p-3">老婆婆笑著點頭、流淚</td><td class="p-3 text-gray-600">感受到被關心</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 標籤 2：字詞寶庫 ==================== -->
+        <section id="tab-vocab" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 shadow-md border-t-8 border-yellow-400">
+                <h2 class="text-2xl font-bold mb-4 text-yellow-700 flex items-center">🖍️ 本課生字</h2>
+                <div class="flex flex-wrap gap-3 text-2xl font-bold text-gray-700">
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">盒</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">瞌</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">癟</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">嚼</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">剎</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">礦</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">澆</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">螞</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">怯</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">孫</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">喂</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">遲</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">穴</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">聰</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">孝</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">釋</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">塞</span>
+                    <span class="bg-yellow-100 hover:bg-yellow-200 px-4 py-2 rounded-lg transition cursor-pointer">銅</span>
+                </div>
+            </div>
+
+            <!-- 【圖例新增】圖解字詞小教室 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-5 rounded-3xl border-l-8 border-indigo-400 shadow-md flex items-center gap-4 card-hover">
+                    <div class="text-5xl bg-indigo-50 w-20 h-20 rounded-full flex justify-center items-center">😴</div>
+                    <div>
+                        <div class="font-black text-2xl text-indigo-700 mb-1">打瞌睡</div>
+                        <div class="text-gray-600 font-bold">坐著或靠著斷斷續續睡<br><span class="text-sm text-indigo-500">(就像上課釣魚模式)</span></div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border-l-8 border-indigo-400 shadow-md flex items-center gap-4 card-hover">
+                    <div class="text-5xl bg-indigo-50 w-20 h-20 rounded-full flex justify-center items-center">🧓</div>
+                    <div>
+                        <div class="font-black text-2xl text-indigo-700 mb-1">凹癟</div>
+                        <div class="text-gray-600 font-bold">不飽滿、凹下去<br><span class="text-sm text-indigo-500">(形容老婆婆沒牙齒的嘴)</span></div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border-l-8 border-indigo-400 shadow-md flex items-center gap-4 card-hover">
+                    <div class="text-5xl bg-indigo-50 w-20 h-20 rounded-full flex justify-center items-center">👄</div>
+                    <div>
+                        <div class="font-black text-2xl text-indigo-700 mb-1">嚼</div>
+                        <div class="text-gray-600 font-bold">用牙齒咬碎食物<br><span class="text-sm text-indigo-500">(細嚼慢嚥)</span></div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border-l-8 border-indigo-400 shadow-md flex items-center gap-4 card-hover">
+                    <div class="text-5xl bg-indigo-50 w-20 h-20 rounded-full flex justify-center items-center">⛏️</div>
+                    <div>
+                        <div class="font-black text-2xl text-indigo-700 mb-1">礦坑</div>
+                        <div class="text-gray-600 font-bold">採礦的地方<br><span class="text-sm text-indigo-500">(早期臺灣礦業背景)</span></div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border-l-8 border-indigo-400 shadow-md flex items-center gap-4 card-hover">
+                    <div class="text-5xl bg-indigo-50 w-20 h-20 rounded-full flex justify-center items-center">⚡</div>
+                    <div>
+                        <div class="font-black text-2xl text-indigo-700 mb-1">一剎那</div>
+                        <div class="text-gray-600 font-bold">很短的時間<br><span class="text-sm text-indigo-500">(一瞬間)</span></div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border-l-8 border-indigo-400 shadow-md flex items-center gap-4 card-hover">
+                    <div class="text-5xl bg-indigo-50 w-20 h-20 rounded-full flex justify-center items-center">🏃‍♂️</div>
+                    <div>
+                        <div class="font-black text-2xl text-indigo-700 mb-1">毫不遲疑</div>
+                        <div class="text-gray-600 font-bold">一點也不猶豫<br><span class="text-sm text-indigo-500">(秒選、秒行動)</span></div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border-l-8 border-indigo-400 shadow-md flex items-center gap-4 card-hover">
+                    <div class="text-5xl bg-indigo-50 w-20 h-20 rounded-full flex justify-center items-center">😮‍💨</div>
+                    <div>
+                        <div class="font-black text-2xl text-indigo-700 mb-1">如釋重負</div>
+                        <div class="text-gray-600 font-bold">像放下重擔般輕鬆<br><span class="text-sm text-indigo-500">(壓力解除)</span></div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border-l-8 border-indigo-400 shadow-md flex items-center gap-4 card-hover">
+                    <div class="text-5xl bg-indigo-50 w-20 h-20 rounded-full flex justify-center items-center">🫣</div>
+                    <div>
+                        <div class="font-black text-2xl text-indigo-700 mb-1">膽怯</div>
+                        <div class="text-gray-600 font-bold">害怕、不敢<br><span class="text-sm text-indigo-500">(怯生生)</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 標籤 3：閱讀與寫作秘笈 ==================== -->
+        <section id="tab-skills" class="hidden space-y-6">
+            
+            <!-- 【圖例新增】偵探找線索示範圖 -->
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 text-[150px] opacity-20">🔎</div>
+                <h2 class="text-2xl font-bold mb-4 flex items-center relative z-10"><span class="text-3xl mr-2">🕵️‍♂️</span> 證據閱讀法：當個閱讀小偵探</h2>
+                
+                <div class="bg-white/10 p-5 rounded-2xl relative z-10 mb-4 backdrop-blur-sm border border-white/20">
+                    <h3 class="text-yellow-300 font-black mb-2 border-b border-white/30 pb-2">📂 偵探解題 4 步驟：</h3>
+                    <ul class="space-y-3 text-lg font-bold">
+                        <li class="flex items-center"><span class="bg-blue-800 text-white w-8 h-8 rounded-full flex justify-center items-center mr-3">1</span> 答案在文章的哪一句？ <span class="text-yellow-200 ml-2 text-sm">(回頭翻課本)</span></li>
+                        <li class="flex items-center"><span class="bg-blue-800 text-white w-8 h-8 rounded-full flex justify-center items-center mr-3">2</span> 有沒有關鍵字？ <span class="text-yellow-200 ml-2 text-sm">(找出動作或表情)</span></li>
+                        <li class="flex items-center"><span class="bg-blue-800 text-white w-8 h-8 rounded-full flex justify-center items-center mr-3">3</span> 我可以在課本上畫線嗎？ <span class="text-yellow-200 ml-2 text-sm">(拿出螢光筆)</span></li>
+                        <li class="flex items-center"><span class="bg-blue-800 text-white w-8 h-8 rounded-full flex justify-center items-center mr-3">4</span> 我的答案有沒有文章證據？</li>
+                    </ul>
+                </div>
+                
+                <!-- 示範圖表 -->
+                <div class="bg-white text-gray-800 p-4 rounded-xl relative z-10 shadow-inner">
+                    <div class="text-sm text-gray-500 font-bold mb-1">【偵探辦案示範】</div>
+                    <div class="text-lg">「我看到老婆婆<span class="bg-yellow-300 px-1 font-bold">凹癟的嘴不停嚼著</span>...」</div>
+                    <div class="mt-2 flex items-center text-indigo-600 font-bold">
+                        <span class="text-2xl mr-2">➡️</span> 證據顯示：主角覺得老婆婆的長相很陌生，推論出主角覺得 <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded ml-2">害怕 / 不安</span>。
+                    </div>
+                </div>
+                
+                <div class="mt-4 text-center font-black text-yellow-300 text-xl animate-pulse relative z-10">
+                    💡 永遠記得：「答案一定在文章裡，不在腦袋裡。」
+                </div>
+            </div>
+
+            <!-- 五感摹寫圖 -->
+            <div class="bg-white rounded-3xl p-6 shadow-md border-t-8 border-purple-400">
+                <h2 class="text-2xl font-bold mb-4 text-purple-700 text-center">✨ 五感摹寫魔法：讓文字變 3D 電影</h2>
+                <p class="text-center text-gray-600 font-bold mb-6 bg-purple-50 py-2 rounded-lg">只要加入五官感覺，就能把平淡的句子變得生動！</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div class="bg-purple-50 p-4 rounded-2xl text-center border border-purple-100 hover:bg-purple-100 transition cursor-pointer">
+                        <div class="text-5xl mb-2">👀</div>
+                        <h3 class="font-black text-purple-800 text-lg">視覺</h3>
+                        <p class="text-xs text-gray-500 mt-1">看到什麼顏色/動作？</p>
+                        <div class="bg-white mt-3 p-2 rounded-lg font-bold text-purple-600 text-sm shadow-sm">凹癟的嘴</div>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-2xl text-center border border-blue-100 hover:bg-blue-100 transition cursor-pointer">
+                        <div class="text-5xl mb-2">👂</div>
+                        <h3 class="font-black text-blue-800 text-lg">聽覺</h3>
+                        <p class="text-xs text-gray-500 mt-1">聽到什麼聲音？</p>
+                        <div class="bg-white mt-3 p-2 rounded-lg font-bold text-blue-600 text-sm shadow-sm">轟隆的車聲</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-2xl text-center border border-green-100 hover:bg-green-100 transition cursor-pointer">
+                        <div class="text-5xl mb-2">👃</div>
+                        <h3 class="font-black text-green-800 text-lg">嗅覺</h3>
+                        <p class="text-xs text-gray-500 mt-1">聞到什麼味道？</p>
+                        <div class="bg-white mt-3 p-2 rounded-lg font-bold text-green-600 text-sm shadow-sm">苦茶油幽香</div>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-2xl text-center border border-orange-100 hover:bg-orange-100 transition cursor-pointer">
+                        <div class="text-5xl mb-2">👅</div>
+                        <h3 class="font-black text-orange-800 text-lg">味覺</h3>
+                        <p class="text-xs text-gray-500 mt-1">吃起來感覺怎樣？</p>
+                        <div class="bg-white mt-3 p-2 rounded-lg font-bold text-orange-600 text-sm shadow-sm">芭樂酸酸甜甜</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 rounded-2xl text-center border border-pink-100 hover:bg-pink-100 transition cursor-pointer">
+                        <div class="text-5xl mb-2">✋</div>
+                        <h3 class="font-black text-pink-800 text-lg">觸覺</h3>
+                        <p class="text-xs text-gray-500 mt-1">身體感覺怎樣？</p>
+                        <div class="bg-white mt-3 p-2 rounded-lg font-bold text-pink-600 text-sm shadow-sm">重重的倒在腿上</div>
+                    </div>
+                </div>
+
+                <!-- 【圖例新增】寫作升級對照表 -->
+                <div class="mt-8 bg-gray-50 p-5 rounded-2xl border-2 border-dashed border-gray-300">
+                    <h3 class="font-bold text-gray-700 mb-3 text-lg">📝 寫作升級對照圖：</h3>
+                    <div class="flex flex-col md:flex-row gap-4 items-stretch">
+                        <div class="flex-1 bg-white p-4 rounded-xl shadow-sm border-l-4 border-gray-400">
+                            <div class="text-sm font-bold text-gray-400 mb-2">❌ 普通寫法 (只有結果)</div>
+                            <div class="text-lg text-gray-600">「我很害怕。」</div>
+                        </div>
+                        <div class="hidden md:flex items-center justify-center text-3xl text-yellow-400 font-bold">➡️</div>
+                        <div class="flex-1 bg-white p-4 rounded-xl shadow-sm border-l-4 border-yellow-400 relative overflow-hidden">
+                            <div class="absolute right-2 top-2 text-4xl opacity-20">✨</div>
+                            <div class="text-sm font-bold text-yellow-600 mb-2">✅ 升級寫法 (加入五感與畫面)</div>
+                            <div class="text-lg text-gray-800 leading-relaxed">
+                                「火車<span class="text-blue-500 font-bold">轟隆轟隆</span>地晃著(👂)，老婆婆<span class="text-purple-500 font-bold">凹癟的嘴</span>不停嚼動(👀)，我的手心慢慢<span class="text-pink-500 font-bold">冒出汗</span>(✋)。」
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 弱點補強區 -->
+            <div class="bg-red-50 rounded-3xl p-6 shadow-md border-l-8 border-red-400">
+                <h2 class="text-xl font-bold mb-4 text-red-700 flex items-center"><span class="text-2xl mr-2">🛠️</span> 老師的秘密特訓 (語文常識)</h2>
+                <ul class="space-y-4">
+                    <li class="bg-white p-4 rounded-xl shadow-sm flex gap-3">
+                        <div class="text-3xl">⏱️</div>
+                        <div>
+                            <strong class="text-red-600 block mb-1">1. 成語情境化：</strong> 
+                            看到別人有難立刻幫忙，這不是「猶豫」，這是 <span class="bg-yellow-200 px-2 py-1 rounded font-bold text-yellow-800">毫不遲疑</span>！(要學會判斷情境喔)
+                        </div>
+                    </li>
+                    <li class="bg-white p-4 rounded-xl shadow-sm flex gap-3">
+                        <div class="text-3xl">✂️</div>
+                        <div>
+                            <strong class="text-red-600 block mb-1">2. 語病拆句法：</strong> 
+                            檢查「主詞、動作、有沒有重複」。<br>
+                            <span class="text-gray-500 line-through mr-2">❌ 他不但勇敢，而且也很勇敢。</span> (重複了)<br>
+                            <span class="text-green-600 font-bold">✅ 他不但勇敢，而且很關心別人。</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ==================== 標籤 4：終極挑戰 (測驗區) ==================== -->
+        <section id="tab-quiz" class="hidden">
+            
+            <!-- 測驗首頁 (輸入名字) -->
+            <div id="quiz-start-screen" class="bg-white rounded-3xl p-8 shadow-xl text-center max-w-lg mx-auto border-4 border-dashed border-red-300">
+                <div class="text-6xl mb-4 animate-bounce-slow">🎮</div>
+                <h2 class="text-3xl font-black text-red-600 mb-6">準備好挑戰 50 題大魔王了嗎？</h2>
+                
+                <div class="space-y-4 mb-6 text-left">
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-1">你的名字 (必填)：</label>
+                        <input type="text" id="student-name" placeholder="請輸入姓名" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-red-400 focus:ring-0 text-lg outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-1">班級座號 (選填)：</label>
+                        <input type="text" id="student-id" placeholder="例如：五年一班 05" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-red-400 focus:ring-0 text-lg outline-none transition">
+                    </div>
+                </div>
+
+                <button onclick="startQuiz()" class="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold text-2xl py-4 rounded-2xl shadow-lg hover:scale-105 transition transform">
+                    🚀 開始挑戰
+                </button>
+            </div>
+
+            <!-- 測驗進行中畫面 -->
+            <div id="quiz-active-screen" class="hidden bg-white rounded-3xl p-6 md:p-8 shadow-xl max-w-2xl mx-auto border-t-8 border-blue-500 relative overflow-hidden">
+                
+                <!-- 進度條 -->
+                <div class="mb-6">
+                    <div class="flex justify-between text-sm font-bold text-gray-500 mb-1">
+                        <span id="quiz-progress-text">題號：1 / 50</span>
+                        <span id="quiz-category" class="text-blue-500 bg-blue-50 px-2 py-1 rounded">字詞基礎</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="quiz-progress-bar" class="bg-blue-500 h-3 rounded-full transition-all duration-300" style="width: 2%"></div>
+                    </div>
+                </div>
+
+                <!-- 題目 -->
+                <h3 id="question-text" class="text-2xl font-bold text-gray-800 mb-8 leading-tight">題目載入中...</h3>
+
+                <!-- 選項按鈕 -->
+                <div id="options-container" class="space-y-3">
+                    <!-- Buttons will be injected here -->
+                </div>
+
+                <!-- 回饋訊息 (答對/答錯) -->
+                <div id="feedback-overlay" class="hidden absolute inset-0 bg-white/95 flex flex-col justify-center items-center z-10 px-6 text-center">
+                    <div id="feedback-icon" class="text-7xl mb-4">✅</div>
+                    <h2 id="feedback-title" class="text-3xl font-black mb-2 text-green-600">答對了！</h2>
+                    <p id="feedback-desc" class="text-lg text-gray-600 mb-8 bg-gray-100 p-4 rounded-xl w-full max-w-md">解析內容在這裡...</p>
+                    <button onclick="nextQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105">
+                        下一題 ➡️
+                    </button>
+                </div>
+            </div>
+
+            <!-- 測驗結果畫面 -->
+            <div id="quiz-result-screen" class="hidden bg-white rounded-3xl p-8 shadow-xl text-center max-w-lg mx-auto border-4 border-yellow-400">
+                <h2 class="text-4xl font-black text-gray-800 mb-2">🎉 挑戰結束 🎉</h2>
+                <p id="result-name" class="text-xl text-gray-600 mb-6">王小明 同學</p>
+
+                <div class="bg-yellow-50 rounded-2xl p-6 mb-6 inline-block w-full relative">
+                    <div class="absolute top-2 left-2 text-4xl opacity-30">🏆</div>
+                    <div class="text-6xl font-black text-orange-600 mb-2" id="result-score">100</div>
+                    <div class="text-gray-500 font-bold text-lg">總分</div>
+                    <div class="flex justify-center gap-6 mt-4 text-lg">
+                        <div class="text-green-600 font-bold bg-green-100 px-3 py-1 rounded-full">✅ 答對: <span id="result-correct">50</span> 題</div>
+                        <div class="text-red-500 font-bold bg-red-100 px-3 py-1 rounded-full">❌ 答錯: <span id="result-wrong">0</span> 題</div>
+                    </div>
+                </div>
+
+                <div id="result-advice" class="bg-blue-50 text-blue-800 p-4 rounded-xl font-bold text-lg mb-8 text-left">
+                    學習建議載入中...
+                </div>
+
+                <div class="space-y-3">
+                    <button id="btn-submit-gas" onclick="submitToGas()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-xl py-4 rounded-xl shadow transition flex justify-center items-center gap-2">
+                        💾 上傳成績給老師
+                    </button>
+                    <button onclick="resetQuiz()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-xl py-3 rounded-xl shadow transition">
+                        🔄 再挑戰一次
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="text-center text-gray-400 mt-12 pb-6 text-sm">
+        設計給認真學習的你 🌟 第8課：八歲，一個人去旅行
+    </footer>
+
+    <!-- JavaScript 邏輯區 -->
+    <script>
+        // --- 頁籤切換邏輯 ---
+        function switchTab(tabId) {
+            // 隱藏所有 section
+            document.getElementById('tab-summary').classList.add('hidden');
+            document.getElementById('tab-vocab').classList.add('hidden');
+            document.getElementById('tab-skills').classList.add('hidden');
+            document.getElementById('tab-quiz').classList.add('hidden');
+            
+            // 移除所有按鈕 active 狀態
+            const btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(btn => btn.classList.remove('active', 'ring-4', 'ring-opacity-50'));
+            document.getElementById('btn-tab-quiz').classList.remove('animate-pulse'); // 點過測驗就停止跳動
+
+            // 顯示目標 section
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            // 設定目標按鈕 active (透過 id 對應)
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        // --- 題庫資料 (50題) ---
+        // 答案對照: A=0, B=1, C=2, D=3
+        const questionsData = [
+            // A. 字詞基礎題 1~10
+            { q: "「打瞌睡」的意思是什麼？", options: ["認真看書", "斷斷續續想睡", "快速奔跑", "大聲說話"], ans: 1, cat: "字詞基礎", exp: "打瞌睡是指坐著或靠著斷斷續續地睡覺。" },
+            { q: "「凹癟」最接近哪個意思？", options: ["圓潤飽滿", "凹下去、不飽滿", "明亮", "快速"], ans: 1, cat: "字詞基礎", exp: "文中用來形容老婆婆沒有牙齒，嘴巴凹下去的樣子。" },
+            { q: "「毫不遲疑」的意思是？", options: ["很猶豫", "完全不猶豫", "很害怕", "很慢"], ans: 1, cat: "字詞基礎", exp: "毫不遲疑代表一點也沒有猶豫，立刻做出反應。" },
+            { q: "「一剎那」表示？", options: ["很久", "一整天", "很短的時間", "一個月"], ans: 2, cat: "字詞基礎", exp: "一剎那形容極短的時間，就像一瞬間。" },
+            { q: "「怯生生」表示？", options: ["很勇敢", "膽小害怕", "很生氣", "很開心"], ans: 1, cat: "字詞基礎", exp: "怯代表害怕，怯生生是指害怕、不敢靠近的樣子。" },
+            { q: "「孝順」是指？", options: ["尊敬照顧長輩", "不聽話", "逃避責任", "愛玩"], ans: 0, cat: "字詞基礎", exp: "孝順的意思是尊敬、照顧父母或長輩。" },
+            { q: "「如釋重負」表示？", options: ["更緊張", "像放下重擔般輕鬆", "很生氣", "很吵"], ans: 1, cat: "字詞基礎", exp: "釋是放下，重負是重擔。形容壓力解除後很輕鬆。" },
+            { q: "「銅板」屬於哪一類？", options: ["食物", "金錢", "衣服", "工具"], ans: 1, cat: "字詞基礎", exp: "銅板就是硬幣，是金錢的一種。" },
+            { q: "「太陽穴」在人體哪裡？", options: ["手掌", "腳底", "頭部兩側", "膝蓋"], ans: 2, cat: "字詞基礎", exp: "太陽穴位在人體頭部兩側、眼睛後方的位置。" },
+            { q: "「嚼」和下列哪個動作最相關？", options: ["聽", "咬", "跑", "看"], ans: 1, cat: "字詞基礎", exp: "嚼是指用牙齒咬碎食物的動作。" },
+            
+            // B. 課文理解題 11~20
+            { q: "爸爸要主角去宜蘭做什麼？", options: ["買萬金油", "拿回祖母的雨傘", "探望老師", "找同學"], ans: 1, cat: "課文理解", exp: "課文一開始就提到，爸爸要他坐火車去宜蘭拿回祖母的雨傘。" },
+            { q: "主角為什麼不用買票？", options: ["忘記買", "身高不夠", "車長認識他", "爸爸買好了"], ans: 1, cat: "課文理解", exp: "因為主角那時才八歲，身高還沒達到需要買票的標準。" },
+            { q: "主角口袋裡有什麼？", options: ["一盒萬金油", "手機", "錢包", "雨傘"], ans: 0, cat: "課文理解", exp: "主角出發時，口袋裡只有一盒萬金油。" },
+            { q: "火車上誰是醒著的？", options: ["爸爸", "老師", "老婆婆", "列車長"], ans: 2, cat: "課文理解", exp: "火車上其他人都睡著了，只有主角和對面的老婆婆醒著。" },
+            { q: "老婆婆拿什麼給主角吃？", options: ["餅乾", "芭樂", "糖果", "麵包"], ans: 1, cat: "課文理解", exp: "老婆婆請主角吃酸酸甜甜的芭樂。" },
+            { q: "主角聞到老婆婆身上什麼味道？", options: ["香水味", "苦茶油幽香", "汽油味", "花香"], ans: 1, cat: "課文理解", exp: "主角在老婆婆身上聞到了和祖母一樣的苦茶油幽香。" },
+            { q: "老婆婆後來發生什麼事？", options: ["下車了", "昏倒了", "唱歌", "睡醒離開"], ans: 1, cat: "課文理解", exp: "老婆婆突然臉色蒼白，重重地倒在主角腿上昏倒了。" },
+            { q: "主角用什麼方式求救？", options: ["打電話", "大喊救人", "寫紙條", "跑去車頭"], ans: 1, cat: "課文理解", exp: "主角勇敢地大喊「救人呵！救人呵！」來尋求幫忙。" },
+            { q: "老婆婆醒來後，大家以為主角是她的誰？", options: ["學生", "鄰居", "孫子", "朋友"], ans: 2, cat: "課文理解", exp: "因為主角熱心幫忙，大家誤以為他是老婆婆孝順的孫子。" },
+            { q: "主角回到村子後，在祖母臉上彷彿看見誰？", options: ["爸爸", "火車上的老婆婆", "姨婆", "司機"], ans: 1, cat: "課文理解", exp: "因為感受到了溫暖，主角在祖母臉上彷彿看見了老婆婆的影子。" },
+
+            // C. 情緒推論題 21~30
+            { q: "主角剛被爸爸要求獨自出門，可能感到？", options: ["驚訝", "無聊", "得意", "生氣"], ans: 0, cat: "情緒推論", exp: "爸爸「突然」提出要求，對八歲小孩來說事情來得很突然，所以是驚訝。" },
+            { q: "主角看到老婆婆凹癟的嘴不停嚼著，感到？", options: ["害怕", "興奮", "驕傲", "放鬆"], ans: 0, cat: "情緒推論", exp: "陌生的外貌讓第一次獨自搭車的他感到不安和害怕。" },
+            { q: "主角聞到苦茶油幽香後，心情變得？", options: ["更害怕", "比較安心", "很憤怒", "很失望"], ans: 1, cat: "情緒推論", exp: "熟悉的味道讓他聯想到親愛的祖母，因此放下了戒心。" },
+            { q: "老婆婆倒在主角腿上時，主角可能感到？", options: ["緊張慌張", "無聊", "得意", "想睡"], ans: 0, cat: "情緒推論", exp: "突發狀況讓年幼的主角不知所措，非常緊張。" },
+            { q: "主角想到礦坑出事時大家呼救，代表他？", options: ["想逃走", "想找方法救人", "想裝睡", "想吃芭樂"], ans: 1, cat: "情緒推論", exp: "他從舊經驗中尋找解決辦法，決定大聲呼救。" },
+            { q: "主角「毫不遲疑」說我有，表示他？", options: ["猶豫不決", "願意幫忙", "很自私", "不想管"], ans: 1, cat: "情緒推論", exp: "毫不遲疑展現了他想救人的急迫與熱心。" },
+            { q: "老婆婆笑著點頭、流淚，可能是因為？", options: ["生氣", "感謝與感動", "想罵人", "很無聊"], ans: 1, cat: "情緒推論", exp: "老婆婆感受到大家的幫忙，特別是主角的關心，流下感動的眼淚。" },
+            { q: "主角想解釋自己不是她孫子，但沒有機會，代表他？", options: ["完全不在乎", "內心有話想說", "很想睡", "很開心"], ans: 1, cat: "情緒推論", exp: "他心裡知道真相，但當時情況熱烈，他只能把話藏在心裡。" },
+            { q: "最後祖母與老婆婆形象重疊，代表主角感受到？", options: ["恐怖", "親切與溫暖", "討厭", "無聊"], ans: 1, cat: "情緒推論", exp: "兩人都在他心中留下了慈愛與溫暖的感覺。" },
+            { q: "本文主角最大的成長是？", options: ["學會買票", "學會勇敢與關心他人", "學會唱歌", "學會做生意"], ans: 1, cat: "情緒推論", exp: "透過這次旅行，主角學會了面對突發狀況的勇敢，並主動關心別人。" },
+
+            // D. 摹寫判斷題 31~40
+            { q: "「轟隆的車聲」是什麼摹寫？", options: ["視覺", "聽覺", "嗅覺", "味覺"], ans: 1, cat: "摹寫判斷", exp: "描寫耳朵聽到的聲音，是聽覺摹寫。" },
+            { q: "「苦茶油的幽香」是什麼摹寫？", options: ["嗅覺", "觸覺", "味覺", "視覺"], ans: 0, cat: "摹寫判斷", exp: "描寫鼻子聞到的氣味，是嗅覺摹寫。" },
+            { q: "「凹癟的嘴」是什麼摹寫？", options: ["聽覺", "視覺", "嗅覺", "味覺"], ans: 1, cat: "摹寫判斷", exp: "描寫眼睛看到的畫面，是視覺摹寫。" },
+            { q: "「有人重重的倒在我的腿上」偏向什麼摹寫？", options: ["觸覺", "嗅覺", "味覺", "聽覺"], ans: 0, cat: "摹寫判斷", exp: "感受到腿上的重量與接觸，是觸覺摹寫。" },
+            { q: "「芭樂酸酸甜甜」是什麼摹寫？", options: ["味覺", "視覺", "聽覺", "嗅覺"], ans: 0, cat: "摹寫判斷", exp: "描寫舌頭嚐到的味道，是味覺摹寫。" },
+            { q: "「雨水冰冰涼涼打在臉上」是什麼摹寫？", options: ["觸覺", "聽覺", "嗅覺", "視覺"], ans: 0, cat: "摹寫判斷", exp: "皮膚感受到溫度與接觸，是觸覺摹寫。" },
+            { q: "「窗外青翠的山一座接一座」是什麼摹寫？", options: ["視覺", "聽覺", "味覺", "嗅覺"], ans: 0, cat: "摹寫判斷", exp: "描寫眼睛看到的風景，是視覺摹寫。" },
+            { q: "「鍋子噹啷一聲掉在地上」是什麼摹寫？", options: ["聽覺", "味覺", "視覺", "嗅覺"], ans: 0, cat: "摹寫判斷", exp: "描寫金屬碰撞的聲音，是聽覺摹寫。" },
+            { q: "「廚房傳來刺鼻的焦味」是什麼摹寫？", options: ["嗅覺", "視覺", "聽覺", "觸覺"], ans: 0, cat: "摹寫判斷", exp: "描寫鼻子聞到的燒焦氣味，是嗅覺摹寫。" },
+            { q: "摹寫的主要效果是？", options: ["讓文章更短", "讓文章更生動", "讓字變少", "讓題目變難"], ans: 1, cat: "摹寫判斷", exp: "摹寫能讓讀者有身歷其境的感覺，文章更有畫面。" },
+
+            // E. 閱讀與寫作應用題 41~50
+            { q: "「全村的人像被水澆到的螞蟻群一樣衝過來」主要表現什麼？", options: ["大家很慢", "大家快速聚集", "大家在玩水", "大家很安靜"], ans: 1, cat: "閱讀與寫作", exp: "形容遇到緊急狀況時，大家慌張又快速地靠攏過來。" },
+            { q: "這句使用了哪種修辭？", options: ["譬喻", "排比", "設問", "誇飾"], ans: 0, cat: "閱讀與寫作", exp: "使用了「像...一樣」，將人潮比喻為螞蟻群，是譬喻修辭。" },
+            { q: "主角為什麼一開始不敢靠近老婆婆？", options: ["他害怕陌生人", "他想睡覺", "他不喜歡火車", "他不想吃芭樂"], ans: 0, cat: "閱讀與寫作", exp: "因為年紀小，對陌生且外貌不熟悉的老婆婆感到害怕。" },
+            { q: "老婆婆給主角芭樂，最可能代表？", options: ["善意", "生氣", "命令", "嘲笑"], ans: 0, cat: "閱讀與寫作", exp: "分享食物是釋出善意與友好的表現。" },
+            { q: "本課最主要的寫作方式是？", options: ["記敘", "說明", "議論", "詩歌"], ans: 0, cat: "閱讀與寫作", exp: "文章記錄了主角搭火車發生的一連串事件，是記敘文。" },
+            { q: "本課最重要的閱讀策略是？", options: ["背整篇", "從文中找線索", "只看題目", "猜答案"], ans: 1, cat: "閱讀與寫作", exp: "學會用「證據閱讀法」，從角色的表情、動作中推論情緒。" },
+            { q: "如果要寫「我很緊張」，哪一句最好？", options: ["我很緊張。", "我非常緊張。", "我的手心冒汗，心跳像火車一樣轟隆轟隆。", "我真的很緊張。"], ans: 2, cat: "閱讀與寫作", exp: "C選項加入了觸覺與聽覺摹寫，讓緊張的感覺更具體生動。" },
+            { q: "下列哪句有使用聽覺摹寫？", options: ["花香飄來", "鐘聲噹噹響", "手很冰", "天空很藍"], ans: 1, cat: "閱讀與寫作", exp: "「噹噹響」是聽覺摹寫。" },
+            { q: "下列哪句比較像語病？", options: ["他不但勇敢，而且關心別人。", "他因為勇敢，所以大聲求救。", "他不但勇敢，而且也很勇敢。", "他聽見聲音，立刻回頭。"], ans: 2, cat: "閱讀與寫作", exp: "「勇敢」重複了兩次，句子不通順。" },
+            { q: "本課給我們的啟示是？", options: ["陌生人一定不能幫", "勇敢與關心能帶來溫暖", "搭火車一定很危險", "小孩都應該獨自旅行"], ans: 1, cat: "閱讀與寫作", exp: "課文想傳達的是人與人之間互助與真誠帶來的感動。" }
+        ];
+
+        // --- 測驗狀態變數 ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let studentData = { name: "", id: "" };
+        const gasUrl = "https://script.google.com/macros/s/AKfycbzR-jcQzX4DehQzqjQYRypsH4BS92nBjyd9PMLfwT1JeAywOtzYAw-JAFARa8XDTnPI/exec";
+
+        // --- 測驗功能 ---
+        function startQuiz() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            if (!nameInput) {
+                alert("請一定要輸入你的名字喔！");
+                return;
+            }
+            studentData.name = nameInput;
+            studentData.id = document.getElementById('student-id').value.trim() || "未提供";
+
+            // 初始化變數
+            currentQuestionIndex = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+
+            // 切換畫面
+            document.getElementById('quiz-start-screen').classList.add('hidden');
+            document.getElementById('quiz-active-screen').classList.remove('hidden');
+            
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const qData = questionsData[currentQuestionIndex];
+            
+            // 更新進度條
+            document.getElementById('quiz-progress-text').innerText = `題號：${currentQuestionIndex + 1} / 50`;
+            document.getElementById('quiz-category').innerText = qData.cat;
+            const progressPercent = ((currentQuestionIndex) / 50) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPercent}%`;
+
+            // 更新題目
+            document.getElementById('question-text').innerText = qData.q;
+
+            // 生成選項按鈕
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = ''; // 清空
+            
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            
+            qData.options.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left bg-gray-50 hover:bg-blue-50 border-2 border-gray-200 hover:border-blue-400 text-gray-700 font-bold py-4 px-6 rounded-xl transition duration-200 flex items-center";
+                btn.innerHTML = `<span class="bg-blue-100 text-blue-700 rounded-lg px-3 py-1 mr-4 shadow-sm">${optionLetters[index]}</span> <span class="text-lg">${optText}</span>`;
+                btn.onclick = () => checkAnswer(index);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const qData = questionsData[currentQuestionIndex];
+            const isCorrect = (selectedIndex === qData.ans);
+            
+            const overlay = document.getElementById('feedback-overlay');
+            const icon = document.getElementById('feedback-icon');
+            const title = document.getElementById('feedback-title');
+            const desc = document.getElementById('feedback-desc');
+
+            if (isCorrect) {
+                score += 2; // 每題2分
+                correctCount++;
+                icon.innerText = "🌟";
+                title.innerText = "太棒了，答對囉！";
+                title.className = "text-3xl font-black mb-2 text-green-600";
+            } else {
+                wrongCount++;
+                icon.innerText = "💪";
+                title.innerText = "哎呀，答錯了！";
+                title.className = "text-3xl font-black mb-2 text-red-500";
+            }
+
+            desc.innerHTML = `<strong>正確答案是：${['A', 'B', 'C', 'D'][qData.ans]}</strong><br><br>${qData.exp}`;
+            overlay.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            document.getElementById('feedback-overlay').classList.add('hidden');
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questionsData.length) {
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-active-screen').classList.add('hidden');
+            document.getElementById('quiz-result-screen').classList.remove('hidden');
+
+            document.getElementById('result-name').innerText = `${studentData.id} ${studentData.name} 同學`;
+            
+            // 動畫顯示分數
+            let displayScore = 0;
+            const scoreEl = document.getElementById('result-score');
+            const timer = setInterval(() => {
+                displayScore += 2;
+                scoreEl.innerText = displayScore;
+                if(displayScore >= score) {
+                    clearInterval(timer);
+                    scoreEl.innerText = score; // 確保最後數字正確
+                }
+            }, 20);
+
+            document.getElementById('result-correct').innerText = correctCount;
+            document.getElementById('result-wrong').innerText = wrongCount;
+
+            // 學習建議
+            const adviceEl = document.getElementById('result-advice');
+            if (score >= 90) {
+                adviceEl.innerHTML = "🏆 <strong>閱讀高手！</strong><br>你已經完全掌握第八課的精髓了，不僅了解課文，推論能力也超棒！繼續保持喔！";
+                adviceEl.className = "bg-green-50 text-green-800 p-4 rounded-xl font-bold text-lg mb-8 text-left border-l-4 border-green-500";
+            } else if (score >= 70) {
+                adviceEl.innerHTML = "👍 <strong>基礎很穩固！</strong><br>字詞和課文大意都不錯，但在「情緒推論」和「摹寫修辭」的部分可以再去看看前面的「閱讀秘笈」複習一下喔！";
+                adviceEl.className = "bg-blue-50 text-blue-800 p-4 rounded-xl font-bold text-lg mb-8 text-left border-l-4 border-blue-500";
+            } else {
+                adviceEl.innerHTML = "💪 <strong>還有進步空間！</strong><br>別氣餒！建議你先回到「課文重點」和「字詞寶庫」重新看過一次，記得使用「證據閱讀法」來找答案喔！";
+                adviceEl.className = "bg-orange-50 text-orange-800 p-4 rounded-xl font-bold text-lg mb-8 text-left border-l-4 border-orange-500";
+            }
+
+            // 重置上傳按鈕
+            const btnSubmit = document.getElementById('btn-submit-gas');
+            btnSubmit.innerText = '💾 上傳成績給老師';
+            btnSubmit.disabled = false;
+            btnSubmit.classList.remove('bg-gray-400');
+            btnSubmit.classList.add('bg-green-500', 'hover:bg-green-600');
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-result-screen').classList.add('hidden');
+            document.getElementById('quiz-start-screen').classList.remove('hidden');
+            // 可以選擇保留名字，方便重測
+        }
+
+        // --- GAS 傳送功能 ---
+        function submitToGas() {
+            const btn = document.getElementById('btn-submit-gas');
+            btn.innerText = '⏳ 傳送中，請稍後...';
+            btn.disabled = true;
+            btn.classList.remove('bg-green-500', 'hover:bg-green-600');
+            btn.classList.add('bg-gray-400');
+
+            // 準備資料
+            const payload = {
+                "姓名": studentData.name,
+                "座號": studentData.id,
+                "分數": score,
+                "答對題數": correctCount,
+                "答錯題數": wrongCount,
+                "時間": new Date().toLocaleString('zh-TW')
+            };
+
+            // 將物件轉為 URL Encoded 字串
+            const formData = new URLSearchParams();
+            for (const key in payload) {
+                formData.append(key, payload[key]);
+            }
+
+            // 使用 POST 送出
+            fetch(gasUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData.toString()
+            })
+            .then(() => {
+                btn.innerText = '✅ 成績已成功送出！';
+                btn.classList.remove('bg-gray-400');
+                btn.classList.add('bg-blue-500'); // 變更顏色表示完成
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                btn.innerText = '❌ 傳送失敗，請截圖給老師';
+            });
+        }
+    </script>
+</body>
+</html>
