@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魔術師爸爸 自學挑戰站</title>
+    <!-- 引入 Google Fonts: Mali (活潑標題), Nunito (清晰內文) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mali: ['Mali', 'cursive'],
+                        nunito: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            pink: '#fdf2f8',   
+                            blue: '#eff6ff',   
+                            yellow: '#fefce8', 
+                            purple: '#faf5ff', 
+                            text: '#334155',   
+                            accent1: '#f472b6',
+                            accent2: '#60a5fa',
+                            accent3: '#fbbf24' 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 核心版面設定 (網頁滾動格式) */
+        body {
+            background-color: #f8fafc;
+            font-family: 'Nunito', sans-serif;
+            color: #334155;
+            scroll-behavior: smooth;
+            padding-top: 80px; /* 為固定導覽列留空間 */
+        }
+
+        /* 上方固定導覽列 */
+        #top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        #top-nav a {
+            font-family: 'Mali', cursive;
+            font-weight: 700;
+            color: #475569;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+            background-color: #f1f5f9;
+        }
+        #top-nav a:hover { 
+            background-color: #fefce8; 
+            color: #fbbf24; 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(251, 191, 36, 0.2);
+        }
+
+        /* 網頁區塊容器設定 */
+        .page-section {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            border-radius: 40px;
+            border: 6px solid #ffffff;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.1), inset 0 0 0 2px rgba(255,255,255,0.5);
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 768px) {
+            .page-section { padding: 30px 20px; border-radius: 24px; border-width: 4px; margin-bottom: 40px; }
+            #top-nav a { font-size: 14px; padding: 6px 12px; }
+        }
+
+        /* 標題共用樣式 */
+        .section-title {
+            font-family: 'Mali', cursive;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        @media (max-width: 768px) { .section-title { font-size: 28px; } }
+
+        /* 「我學會了」按鈕樣式 (改為相對定位於區塊底部) */
+        .learned-btn {
+            align-self: flex-end;
+            margin-top: 30px;
+            background-color: white;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            font-family: 'Mali', cursive;
+            font-weight: 700;
+            padding: 12px 24px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+        }
+        .learned-btn:hover {
+            transform: scale(1.05);
+            border-color: #4ade80;
+            color: #4ade80;
+        }
+        .learned-btn.active {
+            background-color: #4ade80;
+            border-color: #4ade80;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(74, 222, 128, 0.4);
+        }
+
+        /* 自訂漸層背景 */
+        .bg-gradient-soft { background: linear-gradient(135deg, #fdf2f8 0%, #eff6ff 100%); }
+        .bg-gradient-warm { background: linear-gradient(135deg, #fefce8 0%, #fff7ed 100%); }
+        .bg-gradient-cool { background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%); }
+        .bg-gradient-hero { background: radial-gradient(circle at top right, #fefce8, #fdf2f8, #faf5ff); }
+
+        /* 標籤強調樣式 */
+        .highlight-mark {
+            background: linear-gradient(120deg, #fef08a 0%, #fef08a 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 90%;
+            padding: 0 4px;
+        }
+
+        /* 隱藏原生卷軸 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+
+    <!-- 導覽列 -->
+    <nav id="top-nav">
+        <a href="#slide1">🏠 首頁</a>
+        <a href="#slide2">🗺️ 學習地圖</a>
+        <a href="#slide4">📝 四季魔術</a>
+        <a href="#slide5">🔤 生字新詞</a>
+        <a href="#slide7">🕵️ 證據閱讀</a>
+        <a href="#slide8">✍️ 修辭寫作</a>
+        <a href="#slide10">🎮 開始測驗</a>
+    </nav>
+
+    <!-- 容器開始 -->
+    <div class="px-4">
+
+        <!-- 區塊 1: 首頁 -->
+        <section class="page-section bg-gradient-hero min-h-[80vh] justify-center items-center text-center mt-10" id="slide1">
+            <div class="flex flex-col items-center gap-6">
+                <div class="text-7xl md:text-8xl mb-4 relative">
+                    🎩✨
+                    <div class="absolute -top-4 -right-8 text-4xl animate-bounce">🍂</div>
+                    <div class="absolute -bottom-4 -left-8 text-4xl animate-pulse">🌸</div>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-800 drop-shadow-md font-mali">
+                    魔術師爸爸 <span class="text-brand-accent1">自學挑戰站</span>
+                </h1>
+                <p class="text-xl md:text-3xl font-nunito text-slate-600 mt-4 bg-white/60 px-8 py-3 rounded-full shadow-sm">
+                    從景物讀出思念，從句子找到證據 🕵️‍♀️
+                </p>
+                <a href="#slide2" class="mt-8 px-10 py-5 bg-brand-accent3 text-white text-2xl md:text-3xl font-mali font-bold rounded-full shadow-xl hover:scale-105 transition-transform hover:shadow-2xl hover:bg-yellow-400">
+                    開始學習 🚀
+                </a>
+            </div>
+        </section>
+
+        <!-- 區塊 2: 學習地圖 -->
+        <section class="page-section bg-gradient-soft" id="slide2">
+            <h2 class="section-title">🗺️ 學習地圖</h2>
+            <div class="flex-col w-full">
+                <p class="text-xl md:text-2xl text-slate-600 mb-8">跟著地圖走，闖過五個關卡，成為國語小達人！</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <!-- Tile 1 -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg flex flex-col items-center text-center border-t-8 border-brand-accent1 relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 text-6xl opacity-20">📖</div>
+                        <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center text-2xl mb-4 font-bold">1</div>
+                        <h3 class="text-xl font-bold mb-2">課文大意</h3>
+                        <p class="text-md text-slate-500 font-nunito">讀懂隱藏情感</p>
+                    </div>
+                    <!-- Tile 2 -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg flex flex-col items-center text-center border-t-8 border-green-400 relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 text-6xl opacity-20">🌸</div>
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-2xl mb-4 font-bold">2</div>
+                        <h3 class="text-xl font-bold mb-2">四季魔術</h3>
+                        <p class="text-md text-slate-500 font-nunito">圖像化記憶</p>
+                    </div>
+                    <!-- Tile 3 -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg flex flex-col items-center text-center border-t-8 border-brand-accent2 relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 text-6xl opacity-20">🔤</div>
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-2xl mb-4 font-bold">3</div>
+                        <h3 class="text-xl font-bold mb-2">生字新詞</h3>
+                        <p class="text-md text-slate-500 font-nunito">詞意與易錯字</p>
+                    </div>
+                    <!-- Tile 4 -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg flex flex-col items-center text-center border-t-8 border-purple-400 relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 text-6xl opacity-20">🕵️</div>
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-2xl mb-4 font-bold">4</div>
+                        <h3 class="text-xl font-bold mb-2">閱讀升級</h3>
+                        <p class="text-md text-slate-500 font-nunito">證據閱讀法</p>
+                    </div>
+                    <!-- Tile 5 -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg flex flex-col items-center text-center border-t-8 border-brand-accent3 relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 text-6xl opacity-20">✍️</div>
+                        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center text-2xl mb-4 font-bold">5</div>
+                        <h3 class="text-xl font-bold mb-2">修辭寫作</h3>
+                        <p class="text-md text-slate-500 font-nunito">文字變畫面</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 區塊 3: 課文大意 -->
+        <section class="page-section bg-gradient-warm" id="slide3">
+            <h2 class="section-title">🏆 關卡1：課文大意與主旨</h2>
+            <div class="flex flex-col md:flex-row gap-8 w-full items-center">
+                <div class="flex-1 flex flex-col justify-center gap-6 font-nunito text-xl md:text-2xl leading-relaxed text-slate-700">
+                    <div class="bg-white p-6 md:p-8 rounded-3xl shadow-md border-l-8 border-brand-accent3">
+                        <p class="mb-4"><strong class="text-2xl md:text-3xl text-slate-800">第7課〈魔術師爸爸〉</strong>是一首感人的詩歌。</p>
+                        <p class="mb-4">主角在爸爸離開後，覺得爸爸像<span class="highlight-mark">魔術師</span>，把自己變成生活中的景物，默默陪伴自己。</p>
+                        <ul class="list-none space-y-3 mt-4">
+                            <li>✨ <strong class="text-brand-accent1">四季變身：</strong> 春天是小花，夏天是大樹，秋天是落葉，冬天是火鍋的煙。</li>
+                            <li>💧 <strong class="text-brand-accent2">最後發現：</strong> 當主角找不到爸爸時，發現爸爸變成溫熱的眼淚，像偷偷親吻自己的臉。</li>
+                        </ul>
+                    </div>
+                    <div class="bg-yellow-50 p-6 rounded-2xl shadow-sm border border-yellow-200">
+                        <p>💡 <strong class="text-xl md:text-2xl text-slate-800">本課主旨：</strong><br>即使親人離開，<span class="highlight-mark">愛與思念仍會留在心中</span>，不會隨著時間消失。</p>
+                    </div>
+                </div>
+                <div class="flex-1 w-full flex items-center justify-center">
+                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="溫馨回憶插畫情境" class="w-full max-w-md object-cover rounded-3xl shadow-xl border-4 border-white aspect-square">
+                </div>
+            </div>
+            <button class="learned-btn" onclick="markLearned(this)">✅ 我學會了</button>
+        </section>
+
+        <!-- 區塊 4: 四季的魔術 -->
+        <section class="page-section bg-gradient-cool" id="slide4">
+            <h2 class="section-title">🏆 關卡2：四季的魔術 (圖像記憶)</h2>
+            <div class="flex-col gap-6 w-full">
+                <!-- 記憶口訣 -->
+                <div class="bg-white/80 backdrop-blur-sm px-6 py-4 rounded-3xl shadow-sm text-xl md:text-2xl font-bold text-slate-800 border-2 border-white flex flex-wrap items-center gap-4 mb-8">
+                    🧠 記憶口訣：<span class="text-brand-accent2">「春花、夏樹、秋葉、冬煙，最後變淚留心間。」</span>
+                </div>
+                
+                <!-- 四季網格 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-6">
+                    <div class="bg-white rounded-3xl shadow-md p-6 flex flex-col items-center justify-center text-center transition hover:scale-105 border-b-8 border-pink-300">
+                        <div class="text-6xl md:text-7xl mb-4">🌸</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-pink-600">春：小花</h3>
+                        <p class="text-lg md:text-xl font-nunito text-slate-600 mt-2">開在小徑邊<br>👉 <span class="font-bold text-slate-800">陪我上學</span></p>
+                    </div>
+                    <div class="bg-white rounded-3xl shadow-md p-6 flex flex-col items-center justify-center text-center transition hover:scale-105 border-b-8 border-green-400">
+                        <div class="text-6xl md:text-7xl mb-4">🌳</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-green-600">夏：魁梧的樹</h3>
+                        <p class="text-lg md:text-xl font-nunito text-slate-600 mt-2">用力搧風<br>👉 <span class="font-bold text-slate-800">哄我入眠</span></p>
+                    </div>
+                    <div class="bg-white rounded-3xl shadow-md p-6 flex flex-col items-center justify-center text-center transition hover:scale-105 border-b-8 border-orange-400">
+                        <div class="text-6xl md:text-7xl mb-4">🍂</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-orange-600">秋：絢麗多姿的葉子</h3>
+                        <p class="text-lg md:text-xl font-nunito text-slate-600 mt-2">落在肩上<br>👉 <span class="font-bold text-slate-800">提醒天涼加衣</span></p>
+                    </div>
+                    <div class="bg-white rounded-3xl shadow-md p-6 flex flex-col items-center justify-center text-center transition hover:scale-105 border-b-8 border-blue-300">
+                        <div class="text-6xl md:text-7xl mb-4">🍲</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-blue-600">冬：火鍋的煙</h3>
+                        <p class="text-lg md:text-xl font-nunito text-slate-600 mt-2">湊熱鬧<br>👉 <span class="font-bold text-slate-800">一起吃火鍋</span></p>
+                    </div>
+                </div>
+
+                <!-- 最後眼淚 -->
+                <div class="w-full lg:w-3/4 mx-auto bg-blue-50 rounded-3xl shadow-md p-6 flex flex-col md:flex-row items-center justify-center gap-6 border-l-8 border-brand-accent2">
+                    <div class="text-6xl">💧</div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl md:text-2xl font-bold text-blue-800">最後：溫熱的眼淚</h3>
+                        <p class="text-lg md:text-xl font-nunito text-slate-700 mt-1">像爸爸偷偷親吻我的臉 👉 <span class="font-bold text-slate-900">爸爸的親吻與思念</span></p>
+                    </div>
+                </div>
+            </div>
+            <button class="learned-btn" onclick="markLearned(this)">✅ 我學會了</button>
+        </section>
+
+        <!-- 區塊 5: 生字新詞 -->
+        <section class="page-section bg-gradient-soft" id="slide5">
+            <h2 class="section-title">🏆 關卡3：生字新詞卡片</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                <!-- 詞語卡片 1 -->
+                <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100 flex flex-col gap-2 transition hover:-translate-y-1 hover:shadow-md">
+                    <div class="flex flex-wrap items-end gap-3">
+                        <h3 class="text-2xl md:text-3xl font-bold text-brand-accent2">渾然忘我</h3>
+                        <span class="text-md font-nunito text-slate-500 bg-slate-100 px-3 py-1 rounded-full">完全投入</span>
+                    </div>
+                    <p class="font-nunito text-lg text-slate-700 mt-2 bg-blue-50 p-3 rounded-xl border-l-4 border-blue-300">
+                        <strong>例句：</strong>小柔一上舞臺表演，就<span class="highlight-mark">渾然忘我</span>，完全融入角色中。
+                    </p>
+                </div>
+
+                <!-- 詞語卡片 2 -->
+                <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100 flex flex-col gap-2 transition hover:-translate-y-1 hover:shadow-md">
+                    <div class="flex flex-wrap items-end gap-3">
+                        <h3 class="text-2xl md:text-3xl font-bold text-green-500">不眠不休</h3>
+                        <span class="text-md font-nunito text-slate-500 bg-slate-100 px-3 py-1 rounded-full">沒有休息</span>
+                    </div>
+                    <p class="font-nunito text-lg text-slate-700 mt-2 bg-green-50 p-3 rounded-xl border-l-4 border-green-300">
+                        <strong>例句：</strong>醫生<span class="highlight-mark">不眠不休</span>地在急診室裡搶救受傷的病患。
+                    </p>
+                </div>
+
+                <!-- 詞語卡片 3 -->
+                <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100 flex flex-col gap-2 transition hover:-translate-y-1 hover:shadow-md">
+                    <div class="flex flex-wrap items-end gap-3">
+                        <h3 class="text-2xl md:text-3xl font-bold text-orange-500">絢麗多姿</h3>
+                        <span class="text-md font-nunito text-slate-500 bg-slate-100 px-3 py-1 rounded-full">色彩美麗多變</span>
+                    </div>
+                    <p class="font-nunito text-lg text-slate-700 mt-2 bg-orange-50 p-3 rounded-xl border-l-4 border-orange-300">
+                        <strong>例句：</strong>黃昏時分，天空出現了<span class="highlight-mark">絢麗多姿</span>的彩霞，真漂亮。
+                    </p>
+                </div>
+
+                <!-- 詞語卡片 4 -->
+                <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100 flex flex-col gap-2 transition hover:-translate-y-1 hover:shadow-md">
+                    <div class="flex flex-wrap items-end gap-3">
+                        <h3 class="text-2xl md:text-3xl font-bold text-purple-500">魁梧</h3>
+                        <span class="text-md font-nunito text-slate-500 bg-slate-100 px-3 py-1 rounded-full">高大壯碩</span>
+                    </div>
+                    <p class="font-nunito text-lg text-slate-700 mt-2 bg-purple-50 p-3 rounded-xl border-l-4 border-purple-300">
+                        <strong>例句：</strong>那位籃球員身材<span class="highlight-mark">魁梧</span>，在球場上非常顯眼。
+                    </p>
+                </div>
+
+                <!-- 詞語卡片 5 -->
+                <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100 flex flex-col gap-2 transition hover:-translate-y-1 hover:shadow-md">
+                    <div class="flex flex-wrap items-end gap-3">
+                        <h3 class="text-2xl md:text-3xl font-bold text-pink-500">隔靴搔癢</h3>
+                        <span class="text-md font-nunito text-slate-500 bg-slate-100 px-3 py-1 rounded-full">沒抓到重點</span>
+                    </div>
+                    <p class="font-nunito text-lg text-slate-700 mt-2 bg-pink-50 p-3 rounded-xl border-l-4 border-pink-300">
+                        <strong>例句：</strong>你的建議根本是<span class="highlight-mark">隔靴搔癢</span>，無法解決真正的問題。
+                    </p>
+                </div>
+
+                <!-- 詞語卡片 6 -->
+                <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100 flex flex-col gap-2 transition hover:-translate-y-1 hover:shadow-md">
+                    <div class="flex flex-wrap items-end gap-3">
+                        <h3 class="text-2xl md:text-3xl font-bold text-brand-accent3">湊熱鬧</h3>
+                        <span class="text-md font-nunito text-slate-500 bg-slate-100 px-3 py-1 rounded-full">參與熱鬧的事</span>
+                    </div>
+                    <p class="font-nunito text-lg text-slate-700 mt-2 bg-yellow-50 p-3 rounded-xl border-l-4 border-yellow-300">
+                        <strong>例句：</strong>只要哪裡有活動，弟弟就喜歡跑去<span class="highlight-mark">湊熱鬧</span>。
+                    </p>
+                </div>
+            </div>
+            <button class="learned-btn" onclick="markLearned(this)">✅ 我學會了</button>
+        </section>
+
+        <!-- 區塊 6: 易錯字 -->
+        <section class="page-section bg-[#fff5f5]" id="slide6">
+            <h2 class="section-title">👀 關卡3.1：易錯字提醒區</h2>
+            <div class="flex-col w-full gap-8">
+                <div class="w-full bg-white p-4 md:p-6 rounded-3xl shadow-sm flex flex-wrap items-center justify-center gap-4 text-xl md:text-2xl font-bold border-2 border-red-100 mb-8">
+                    💡 魔法口訣：<span class="text-red-500">睡覺用「眠」，小路用「徑」，色彩美用「絢」，剛好用「湊」，完全投入用「渾」。</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                    <!-- 比較卡片 -->
+                    <div class="bg-white rounded-3xl shadow-md flex flex-row overflow-hidden h-24 md:h-32 transform transition hover:scale-105">
+                        <div class="w-1/2 bg-red-50 flex items-center justify-center text-2xl md:text-3xl font-bold text-slate-400 line-through border-r border-slate-200">
+                            ❌ 不<span class="text-red-500">泯</span>不休
+                        </div>
+                        <div class="w-1/2 bg-green-50 flex items-center justify-center text-2xl md:text-3xl font-bold text-slate-800">
+                            ✅ 不<span class="text-green-600">眠</span>不休
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl shadow-md flex flex-row overflow-hidden h-24 md:h-32 transform transition hover:scale-105">
+                        <div class="w-1/2 bg-red-50 flex items-center justify-center text-2xl md:text-3xl font-bold text-slate-400 line-through border-r border-slate-200">
+                            ❌ <span class="text-red-500">揍</span>巧
+                        </div>
+                        <div class="w-1/2 bg-green-50 flex items-center justify-center text-2xl md:text-3xl font-bold text-slate-800">
+                            ✅ <span class="text-green-600">湊</span>巧
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl shadow-md flex flex-row overflow-hidden h-24 md:h-32 transform transition hover:scale-105">
+                        <div class="w-1/2 bg-red-50 flex items-center justify-center text-2xl md:text-3xl font-bold text-slate-400 line-through border-r border-slate-200">
+                            ❌ <span class="text-red-500">琿</span>然忘我
+                        </div>
+                        <div class="w-1/2 bg-green-50 flex items-center justify-center text-2xl md:text-3xl font-bold text-slate-800">
+                            ✅ <span class="text-green-600">渾</span>然忘我
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl shadow-md flex flex-row overflow-hidden h-24 md:h-32 transform transition hover:scale-105">
+                        <div class="w-1/2 bg-red-50 flex items-center justify-center text-xl md:text-2xl font-bold text-slate-400 line-through border-r border-slate-200">
+                            ❌ 小<span class="text-red-500">逕</span> / <span class="text-red-500">眴</span>爛
+                        </div>
+                        <div class="w-1/2 bg-green-50 flex flex-col items-center justify-center text-xl md:text-2xl font-bold text-slate-800 gap-1">
+                            <div>✅ 小<span class="text-green-600">徑</span></div>
+                            <div>✅ <span class="text-green-600">絢</span>爛</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="learned-btn" onclick="markLearned(this)">✅ 我學會了</button>
+        </section>
+
+        <!-- 區塊 7: 閱讀理解升級法 -->
+        <section class="page-section bg-gradient-warm" id="slide7">
+            <h2 class="section-title">🏆 關卡4：證據閱讀法</h2>
+            <div class="flex-col gap-10 w-full relative">
+                <div class="w-full flex justify-center mb-10">
+                    <div class="bg-white px-6 md:px-10 py-4 md:py-5 rounded-full shadow-md text-xl md:text-3xl font-bold text-slate-800 border-4 border-brand-accent3 relative text-center">
+                        <span class="absolute -top-6 -left-4 text-4xl md:text-5xl">🚨</span>
+                        終極口訣：「答案一定在<span class="text-brand-accent1">文章</span>裡，不在腦袋裡。」
+                    </div>
+                </div>
+
+                <!-- 流程圖 (響應式：手機為垂直，電腦為水平) -->
+                <div class="flex flex-col lg:flex-row w-full justify-between items-center relative gap-6 px-4">
+                    <!-- 連接線 (僅大螢幕顯示) -->
+                    <div class="hidden lg:block absolute top-1/2 left-16 right-16 h-2 bg-yellow-200 -z-10 transform -translate-y-1/2"></div>
+                    
+                    <div class="flex flex-col items-center gap-2 w-32">
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-white border-4 border-brand-accent3 rounded-full flex items-center justify-center text-2xl shadow-lg font-bold text-slate-700">1</div>
+                        <div class="bg-white px-3 py-1 rounded-xl shadow-sm text-md font-bold text-center border-b-4 border-slate-200">看題目</div>
+                    </div>
+                    
+                    <i class="fa-solid fa-chevron-down lg:fa-chevron-right text-xl text-yellow-400 bg-white rounded-full p-1"></i>
+
+                    <div class="flex flex-col items-center gap-2 w-32">
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-white border-4 border-brand-accent3 rounded-full flex items-center justify-center text-2xl shadow-lg font-bold text-slate-700">2</div>
+                        <div class="bg-white px-3 py-1 rounded-xl shadow-sm text-md font-bold text-center border-b-4 border-brand-accent1">圈關鍵字</div>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down lg:fa-chevron-right text-xl text-yellow-400 bg-white rounded-full p-1"></i>
+
+                    <div class="flex flex-col items-center gap-2 w-32">
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-white border-4 border-brand-accent3 rounded-full flex items-center justify-center text-2xl shadow-lg font-bold text-slate-700">3</div>
+                        <div class="bg-white px-3 py-1 rounded-xl shadow-sm text-md font-bold text-center border-b-4 border-brand-accent2">回文章找</div>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down lg:fa-chevron-right text-xl text-yellow-400 bg-white rounded-full p-1"></i>
+
+                    <div class="flex flex-col items-center gap-2 w-32 transform lg:scale-110">
+                        <div class="w-20 h-20 md:w-24 md:h-24 bg-brand-accent3 border-4 border-white rounded-full flex items-center justify-center text-3xl shadow-lg font-bold text-white">4</div>
+                        <div class="bg-white px-3 py-1 rounded-xl shadow-sm text-md font-bold text-center border-b-4 border-red-400 text-red-500">畫出證據</div>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down lg:fa-chevron-right text-xl text-yellow-400 bg-white rounded-full p-1"></i>
+
+                    <div class="flex flex-col items-center gap-2 w-32">
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-white border-4 border-brand-accent3 rounded-full flex items-center justify-center text-2xl shadow-lg font-bold text-slate-700">5</div>
+                        <div class="bg-white px-3 py-1 rounded-xl shadow-sm text-md font-bold text-center border-b-4 border-green-400">比對選項</div>
+                    </div>
+                </div>
+
+                <div class="w-full bg-yellow-50 p-6 rounded-2xl border-2 border-yellow-100 flex flex-col md:flex-row items-center gap-4 text-lg md:text-xl font-nunito text-slate-700 mt-10">
+                    <i class="fa-solid fa-lightbulb text-4xl text-yellow-400"></i>
+                    <p><strong>問自己三件事：</strong><br>1. 答案在哪一句？ 2. 有沒有關鍵字？ 3. 可以畫線證明嗎？</p>
+                </div>
+            </div>
+            <button class="learned-btn" onclick="markLearned(this)">✅ 我學會了</button>
+        </section>
+
+        <!-- 區塊 8: 修辭理解區 -->
+        <section class="page-section bg-gradient-cool" id="slide8">
+            <h2 class="section-title">🏆 關卡5：修辭理解區 - 把文字變畫面</h2>
+            <div class="flex flex-col md:flex-row gap-8 w-full items-center">
+                <div class="flex-1 flex flex-col justify-center gap-6 font-nunito w-full">
+                    <div class="bg-white p-6 rounded-3xl shadow-md">
+                        <h3 class="text-xl md:text-2xl font-bold text-brand-accent2 mb-3">重要寫法：借景抒情</h3>
+                        <p class="text-lg md:text-xl text-slate-700 leading-relaxed">
+                            不直接說「我想爸爸」，而是用<span class="highlight-mark">具體的景物</span>（小花、大樹、葉子、火鍋煙、眼淚）來表達心中的思念。
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-col gap-3">
+                        <div class="bg-blue-50 p-4 rounded-xl flex items-center gap-4 border-l-4 border-blue-400">
+                            <span class="bg-blue-200 text-blue-800 font-bold px-3 py-1 rounded-lg whitespace-nowrap">聯想</span>
+                            <span class="text-md md:text-lg text-slate-700">由眼前的景物想到回憶裡的陪伴。</span>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-xl flex items-center gap-4 border-l-4 border-green-400">
+                            <span class="bg-green-200 text-green-800 font-bold px-3 py-1 rounded-lg whitespace-nowrap">擬人</span>
+                            <span class="text-md md:text-lg text-slate-700">讓景物像人一樣有動作（樹用力搧風）。</span>
+                        </div>
+                        <div class="bg-pink-50 p-4 rounded-xl flex items-center gap-4 border-l-4 border-pink-400">
+                            <span class="bg-pink-200 text-pink-800 font-bold px-3 py-1 rounded-lg whitespace-nowrap">觸覺</span>
+                            <span class="text-md md:text-lg text-slate-700">寫出具體感覺（「溫熱」的眼淚）。</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 w-full flex items-center justify-center">
+                    <img src="https://images.unsplash.com/photo-1503437313881-503a91226402?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="大自然與孩子想像" class="w-full max-w-md object-cover rounded-3xl shadow-xl border-4 border-white aspect-video md:aspect-square">
+                </div>
+            </div>
+            <button class="learned-btn" onclick="markLearned(this)">✅ 我學會了</button>
+        </section>
+
+        <!-- 區塊 9: 寫作升級區 -->
+        <section class="page-section bg-gradient-soft" id="slide9">
+            <h2 class="section-title">✍️ 關卡5.1：作文三招升級</h2>
+            <div class="flex-col w-full gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- 第一招 -->
+                    <div class="bg-white rounded-3xl shadow-md p-6 flex flex-col relative overflow-hidden border-t-8 border-pink-400 min-h-[220px]">
+                        <div class="text-6xl font-black text-pink-50 absolute -right-2 -bottom-2 z-0">1</div>
+                        <h3 class="text-xl font-bold text-pink-600 mb-2 z-10">加感覺 (五感)</h3>
+                        <p class="text-md font-nunito text-slate-600 mb-4 z-10">寫出身體的具體感受。</p>
+                        <div class="mt-auto bg-slate-50 p-3 rounded-xl z-10">
+                            <p class="text-slate-400 line-through text-sm mb-1">我很難過。</p>
+                            <p class="text-slate-800 font-bold text-sm md:text-base">👉 眼眶熱熱的，說不出話。</p>
+                        </div>
+                    </div>
+                    <!-- 第二招 -->
+                    <div class="bg-white rounded-3xl shadow-md p-6 flex flex-col relative overflow-hidden border-t-8 border-blue-400 min-h-[220px]">
+                        <div class="text-6xl font-black text-blue-50 absolute -right-2 -bottom-2 z-0">2</div>
+                        <h3 class="text-xl font-bold text-blue-600 mb-2 z-10">加畫面 (景物)</h3>
+                        <p class="text-md font-nunito text-slate-600 mb-4 z-10">把情緒變成具體的畫面。</p>
+                        <div class="mt-auto bg-slate-50 p-3 rounded-xl z-10">
+                            <p class="text-slate-400 line-through text-sm mb-1">我很想爸爸。</p>
+                            <p class="text-slate-800 font-bold text-sm md:text-base">👉 樹搖動，好像聽見爸爸叫我睡覺。</p>
+                        </div>
+                    </div>
+                    <!-- 第三招 -->
+                    <div class="bg-white rounded-3xl shadow-md p-6 flex flex-col relative overflow-hidden border-t-8 border-yellow-400 min-h-[220px]">
+                        <div class="text-6xl font-black text-yellow-50 absolute -right-2 -bottom-2 z-0">3</div>
+                        <h3 class="text-xl font-bold text-yellow-600 mb-2 z-10">加轉折 (故事感)</h3>
+                        <p class="text-md font-nunito text-slate-600 mb-4 z-10">原本以為...後來發現...</p>
+                        <div class="mt-auto bg-slate-50 p-3 rounded-xl z-10">
+                            <p class="text-slate-400 line-through text-sm mb-1">爸爸不見了。</p>
+                            <p class="text-slate-800 font-bold text-sm md:text-base">👉 發現愛一直還在心裡。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full bg-gradient-to-r from-brand-yellow to-white p-6 rounded-3xl shadow-sm border border-yellow-200 flex flex-col items-center">
+                    <h4 class="text-lg md:text-xl font-bold text-slate-800 mb-3 text-center">✨ 寫作無敵公式：景物 ＋ 動作 ＋ 回憶 ＋ 心情</h4>
+                    <p class="text-md md:text-xl font-nunito text-slate-700 text-center leading-relaxed">
+                        「秋天的<span class="text-orange-500 font-bold">葉子</span>輕輕<span class="text-blue-500 font-bold">落在我的肩上</span>，像爸爸的手<span class="text-green-600 font-bold">提醒我：天涼加衣</span>。那一刻，我的心<span class="text-pink-500 font-bold">暖暖的，也酸酸的</span>。」
+                    </p>
+                </div>
+            </div>
+            <button class="learned-btn" onclick="markLearned(this)">✅ 我學會了</button>
+        </section>
+
+        <!-- 區塊 10: 互動測驗區 (串接 Google Sheets) -->
+        <section class="page-section bg-slate-800 border-slate-700" id="slide10" style="padding: 0; overflow: hidden; min-height: 600px;">
+            <div class="w-full h-full flex flex-col bg-gradient-to-b from-[#1e293b] to-[#0f172a] text-white p-6 md:p-12 relative flex-grow">
+                <!-- 裝飾 -->
+                <div class="absolute -top-10 -right-10 text-[100px] opacity-10 pointer-events-none">🎓</div>
+                <div class="absolute -bottom-10 -left-10 text-[100px] opacity-10 pointer-events-none">✨</div>
+
+                <!-- Quiz Header -->
+                <div class="flex justify-between items-center mb-8 z-10 flex-wrap gap-4">
+                    <h2 class="text-3xl md:text-4xl font-mali font-bold text-yellow-300">互動測驗區</h2>
+                    <div id="quiz-progress" class="text-lg md:text-xl font-nunito bg-slate-700 px-6 py-2 rounded-full hidden">
+                        題目：<span id="q-current">1</span>/10 | 能量：<span id="score-display" class="text-green-400 font-bold">0</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Content Area -->
+                <div id="quiz-body" class="flex-grow flex flex-col justify-center items-center z-10 w-full max-w-4xl mx-auto">
+                    
+                    <!-- Start Screen -->
+                    <div id="screen-start" class="text-center flex flex-col items-center gap-6 w-full">
+                        <h3 class="text-3xl md:text-5xl font-mali font-bold mb-2">準備好接受挑戰了嗎？</h3>
+                        <p class="text-lg md:text-xl text-slate-300 mb-6">隨機抽出 10 題，測驗結束將自動登記成績！</p>
+                        
+                        <!-- 姓名輸入框 -->
+                        <div class="w-full max-w-md bg-slate-700/50 p-6 rounded-2xl border border-slate-600 shadow-lg mb-4">
+                            <label for="user-name" class="block text-xl font-bold mb-3 text-left">請輸入你的姓名 / 座號：</label>
+                            <input type="text" id="user-name" placeholder="例如：五年三班 王小明" class="w-full px-4 py-3 rounded-xl text-slate-900 text-lg focus:outline-none focus:ring-4 focus:ring-yellow-400 mb-2">
+                            <div id="name-error" class="text-red-400 text-sm text-left hidden">⚠️ 姓名不能空白喔！</div>
+                        </div>
+
+                        <button onclick="startQuiz()" class="px-10 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-slate-900 text-2xl font-bold rounded-full shadow-lg hover:scale-105 transition-transform font-mali w-full max-w-md">
+                            開始測驗 🎮
+                        </button>
+                    </div>
+
+                    <!-- Question Screen -->
+                    <div id="screen-question" class="w-full hidden flex-col gap-6">
+                        <div class="bg-slate-700/50 p-6 md:p-8 rounded-3xl border border-slate-600 shadow-xl">
+                            <h3 id="question-text" class="text-2xl md:text-3xl font-bold font-nunito leading-snug mb-8 text-center text-white"></h3>
+                            <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Options generated by JS -->
+                            </div>
+                        </div>
+                        
+                        <!-- Feedback Area -->
+                        <div id="feedback-area" class="hidden flex-col items-center gap-4 bg-slate-800 p-6 rounded-2xl border-2">
+                            <div id="feedback-msg" class="text-2xl md:text-3xl font-bold font-mali text-center"></div>
+                            <p id="feedback-explain" class="text-lg md:text-xl text-slate-300 font-nunito text-center"></p>
+                            <button id="next-btn" onclick="nextQuestion()" class="mt-4 px-8 py-3 bg-blue-500 text-white text-xl font-bold rounded-full hover:bg-blue-400 hidden">
+                                下一題 ➡️
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Result Screen -->
+                    <div id="screen-result" class="w-full hidden flex-col items-center gap-6 text-center">
+                        <h3 class="text-4xl md:text-5xl font-mali font-bold text-yellow-300 mb-2">測驗完成！</h3>
+                        <div class="bg-slate-700/50 p-6 md:p-8 rounded-3xl w-full max-w-2xl border border-slate-600 shadow-xl">
+                            <p class="text-xl md:text-2xl mb-2 text-slate-300">挑戰者：<span id="display-name" class="text-white font-bold"></span></p>
+                            <p class="text-2xl md:text-3xl mb-4">總分：<span id="final-score" class="font-bold text-white text-4xl md:text-5xl"></span> 分</p>
+                            <p class="text-lg md:text-xl text-slate-300 mb-6">答對：<span id="correct-count" class="text-green-400 font-bold"></span> 題 | 答錯：<span id="wrong-count" class="text-red-400 font-bold"></span> 題</p>
+                            
+                            <div class="py-4 border-t border-slate-600">
+                                <p class="text-xl text-slate-400 mb-2">你的專屬稱號</p>
+                                <div id="title-display" class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-orange-400 animate-pulse"></div>
+                            </div>
+
+                            <!-- 上傳狀態提示 -->
+                            <div id="upload-status" class="mt-4 text-sm text-blue-300 bg-blue-900/30 py-2 px-4 rounded-full inline-block">
+                                ⏳ 正在將成績登記到雲端...
+                            </div>
+                        </div>
+                        <button onclick="resetQuiz()" class="px-8 py-3 bg-slate-600 text-white text-xl font-bold rounded-full hover:bg-slate-500 transition-colors font-mali mt-2">
+                            🔄 再挑戰一次
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div> <!-- 容器結束 -->
+
+    <!-- 互動測驗腳本 -->
+    <script>
+        // 🚨 這裡請貼上你的 Google Apps Script (GAS) 部署網址 🚨
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzAzW7vz3aYYo55RxsmOY-GQyjqmQpmoXfoTOJN886RxUoWxIIwy3_D_pgnzzzMqsxq/exec"; 
+
+        // 「我學會了」按鈕邏輯
+        function markLearned(btn) {
+            btn.innerHTML = "🎉 已學會！";
+            btn.classList.add('active');
+        }
+
+        // 測驗資料庫 (50題)
+        const allQuestions = [
+            {q:"第7課〈魔術師爸爸〉的文體是？", options:["說明文","詩歌","議論文","訪問稿"], answer:1, explain:"本課是詩歌，用景物和情感表達思念。"},
+            {q:"本課作者是？", options:["米雅","林良","琦君","王文華"], answer:0, explain:"第7課作者是米雅。"},
+            {q:"主角為什麼覺得爸爸是魔術師？", options:["爸爸真的在舞臺表演","爸爸好像變成景物陪伴自己","爸爸會變金幣","爸爸教她變魔術"], answer:1, explain:"主角看到生活景物就想起爸爸，像爸爸變成景物一樣。"},
+            {q:"春天時，爸爸變成什麼？", options:["小花","大樹","葉子","火鍋煙"], answer:0, explain:"春天，爸爸變成小花，開在上學的小徑邊。"},
+            {q:"夏天時，爸爸變成什麼？", options:["小花","魁梧的樹","葉子","火鍋煙"], answer:1, explain:"夏天，爸爸變成窗前那棵魁梧的樹，為主角搧風。"},
+            {q:"秋天時，爸爸變成什麼？", options:["葉子","火鍋煙","小徑","月亮"], answer:0, explain:"秋天，爸爸變成絢麗多姿的葉子，提醒天涼加衣。"},
+            {q:"冬天時，爸爸變成什麼？", options:["火鍋的煙","痱子","書包","康乃馨"], answer:0, explain:"冬天，爸爸變成吃火鍋時湊熱鬧的煙。"},
+            {q:"爸爸變成小花，主要代表什麼陪伴？", options:["陪主角上學","幫她寫功課","帶她旅行","買禮物"], answer:0, explain:"小花開在上學的小徑邊，像爸爸陪她上學。"},
+            {q:"爸爸變成大樹，主要代表什麼陪伴？", options:["搧風哄她入眠","幫她考試","陪她游泳","帶她買書"], answer:0, explain:"大樹搧風，讓主角想起爸爸照顧她入睡。"},
+            {q:"爸爸變成葉子，主要代表什麼？", options:["提醒天涼加衣","陪她吃飯","帶她跑步","幫她拍照"], answer:0, explain:"秋天的葉子讓主角想起爸爸提醒她加衣。"},
+            {q:"爸爸變成火鍋煙，主要代表什麼？", options:["一起吃火鍋的熱鬧","一起上學","一起種花","一起睡覺"], answer:0, explain:"火鍋煙象徵一家人在冬天吃火鍋的溫暖回憶。"},
+            {q:"依據課文，可以推論爸爸怎麼了？", options:["到外地出差","故意躲起來","去表演魔術","已經過世"], answer:3, explain:"課文用離開、思念與眼淚暗示爸爸已經過世。"},
+            {q:"主角的情緒不包含哪一個？", options:["哀傷","思念","憤怒","失落"], answer:2, explain:"主角主要是思念、哀傷和失落，不是憤怒。"},
+            {q:"爸爸變成眼淚，最可能表示什麼？", options:["主角因思念爸爸而哭泣","爸爸在玩水","主角很生氣","爸爸真的變成水"], answer:0, explain:"溫熱的眼淚像爸爸親吻她的臉，表達思念。"},
+            {q:"本課主旨較接近哪一項？", options:["魔術很好玩","火鍋很好吃","愛與思念會留在心中","四季天氣很不同"], answer:2, explain:"本課主旨是對爸爸的思念和親情。"},
+            {q:"「小徑」的意思是？", options:["小路","大河","教室","高山"], answer:0, explain:"小徑就是小路。"},
+            {q:"「渾身」的意思是？", options:["全身","局部","旁邊","遠方"], answer:0, explain:"渾身就是全身。"},
+            {q:"「魁梧」可以形容？", options:["身材高大壯碩","顏色很多","聲音很小","心情難過"], answer:0, explain:"魁梧形容身材高大壯碩。"},
+            {q:"「絢麗多姿」適合形容？", options:["色彩美麗的彩霞","破掉的書包","安靜的教室","黑白照片"], answer:0, explain:"絢麗多姿形容色彩美麗且變化多。"},
+            {q:"「偶爾」的意思是？", options:["有時候","一直","永遠","立刻"], answer:0, explain:"偶爾就是有時候。"},
+            {q:"「大概」在「我大概要五點到」中的意思是？", options:["可能、大約","文章重點","完全確定","不可能"], answer:0, explain:"這裡的大概表示可能、大約。"},
+            {q:"「讀書先掌握文章大概」中的大概意思是？", options:["可能","內容大要","完全沒有","一定"], answer:1, explain:"這裡的大概表示文章內容大要。"},
+            {q:"下列哪一個字正確？", options:["不泯不休","不眠不休","不民不休","不明不休"], answer:1, explain:"眠和睡覺有關，所以是不眠不休。"},
+            {q:"下列哪一個字正確？", options:["揍巧","湊巧","奏巧","族巧"], answer:1, explain:"剛好發生叫湊巧。"},
+            {q:"下列哪一個字正確？", options:["琿然忘我","渾然忘我","混然忘我","輝然忘我"], answer:1, explain:"完全投入是渾然忘我。"},
+            {q:"下列哪一個字正確？", options:["小逕","小徑","小經","小勁"], answer:1, explain:"小路是小徑。"},
+            {q:"下列哪一個字正確？", options:["眴爛","絢爛","炫難","旬爛"], answer:1, explain:"色彩美麗用絢爛。"},
+            {q:"「隔靴搔癢」比喻？", options:["沒有切中要害","抓到重點","色彩美麗","身體高大"], answer:0, explain:"隔著靴子抓癢，比喻沒有抓到重點。"},
+            {q:"「七拼八湊」表示？", options:["東拼西湊","非常完整","非常美麗","很會睡覺"], answer:0, explain:"七拼八湊表示東拼西湊。"},
+            {q:"「渾然忘我」表示？", options:["完全投入","非常害怕","非常安靜","睡不著"], answer:0, explain:"渾然忘我是投入到忘記自己。"},
+            {q:"「不眠不休」表示？", options:["不停努力或照顧","睡很久","忘記吃飯","隨便做"], answer:0, explain:"不眠不休表示沒有休息地持續做。"},
+            {q:"本課最重要的寫作方法是？", options:["借景抒情","說明步驟","辯論反駁","廣告推銷"], answer:0, explain:"本課用景物表達思念，是借景抒情。"},
+            {q:"把爸爸想像成小花、大樹、葉子、煙，是什麼能力？", options:["聯想","計算","查字典","分類垃圾"], answer:0, explain:"由景物想到爸爸，是聯想。"},
+            {q:"「大樹用力搧風」讓樹像人一樣做動作，屬於？", options:["擬人","排比","設問","誇飾"], answer:0, explain:"讓事物像人一樣，是擬人。"},
+            {q:"「溫熱的眼淚」主要是哪種感官描寫？", options:["觸覺","聽覺","味覺","嗅覺"], answer:0, explain:"溫熱是觸覺感受。"},
+            {q:"「絢麗多姿的葉子」主要是哪種感官描寫？", options:["視覺","聽覺","味覺","嗅覺"], answer:0, explain:"色彩美麗屬於視覺描寫。"},
+            {q:"閱讀題最重要的策略是？", options:["找文章證據","亂猜","選最長答案","憑感覺"], answer:0, explain:"答案一定在文章裡，要找證據。"},
+            {q:"證據閱讀法第一步通常是？", options:["圈題目關鍵字","直接猜答案","先看答案","跳過文章"], answer:0, explain:"先圈關鍵字，再回文章找線索。"},
+            {q:"「答案一定在文章裡，不在腦袋裡」提醒我們？", options:["要找文本證據","要靠想像亂選","不用看文章","只看題號"], answer:0, explain:"閱讀理解要回到文章找答案。"},
+            {q:"下列哪一句最有畫面感？", options:["我很想爸爸","我真的想爸爸","看到窗前的樹搖動，我好像聽見爸爸叫我早點睡","爸爸是爸爸"], answer:2, explain:"具體景物加回憶，畫面感更強。"},
+            {q:"下列哪一句有五感描寫？", options:["我很開心","我笑到肚子痛","我開心極了","我真的開心"], answer:1, explain:"笑到肚子痛寫出身體感受。"},
+            {q:"下列哪一句有心情轉折？", options:["我去學校","我吃早餐","原本我以為做不到，後來在朋友鼓勵下完成了","天空很藍"], answer:2, explain:"原本到後來，就是轉折。"},
+            {q:"「當……才發現……」屬於什麼句型？", options:["條件複句","疑問句","感嘆句","命令句"], answer:0, explain:"當某個情況發生，才發現某件事，是條件複句。"},
+            {q:"下列哪一句符合「當……才發現……」？", options:["當我打開書包，才發現作業忘在家裡","因為我打開書包，而且作業","雖然才發現，當書包","我才書包當發現"], answer:0, explain:"句子結構完整，符合句型。"},
+            {q:"「窗前那棵魁梧的樹」的結構重點是？", options:["地點＋那＋量詞＋形容詞＋名詞","只有動詞","只有疑問詞","沒有名詞"], answer:0, explain:"這是描述某個位置的事物狀態。"},
+            {q:"「一枚絢麗多姿的葉子」中的「枚」是？", options:["量詞","動詞","形容詞","連接詞"], answer:0, explain:"枚是量詞。"},
+            {q:"「抓不到任何一枚美麗的落葉」可以仿寫成？", options:["找不到任何一朵可愛的小花","我吃飯","天空很藍","爸爸是魔術師"], answer:0, explain:"這句保留了『動作＋不到＋任何＋量詞＋形容詞＋名詞』的結構。"},
+            {q:"如果題目問主角心情，應該先找什麼？", options:["景物和相關句子","自己的星座","答案長短","選項順序"], answer:0, explain:"要從課文景物和句子找主角情緒線索。"},
+            {q:"「爸爸沒有不見」最適合解釋為？", options:["爸爸的愛仍在主角心中","爸爸躲在門後","爸爸在表演魔術","爸爸去買火鍋"], answer:0, explain:"這是情感上的存在，不是真的躲起來。"},
+            {q:"本課最適合訓練哪種能力？", options:["從具體景物讀出抽象情感","背九九乘法","查自然實驗","計算面積"], answer:0, explain:"本課重點是讀懂景物背後的情感。"}
+        ];
+
+        // 測驗狀態變數
+        let currentQuiz = [];
+        let currentIndex = 0;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let answered = false;
+        let userName = "";
+
+        // DOM 元素
+        const elStart = document.getElementById('screen-start');
+        const elQuestion = document.getElementById('screen-question');
+        const elResult = document.getElementById('screen-result');
+        const elProgress = document.getElementById('quiz-progress');
+        const elQCurrent = document.getElementById('q-current');
+        const elScoreDisplay = document.getElementById('score-display');
+        const elQText = document.getElementById('question-text');
+        const elOptions = document.getElementById('options-container');
+        const elFeedback = document.getElementById('feedback-area');
+        const elFeedbackMsg = document.getElementById('feedback-msg');
+        const elFeedbackExplain = document.getElementById('feedback-explain');
+        const elNextBtn = document.getElementById('next-btn');
+
+        // 打亂陣列 
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // 開始測驗
+        function startQuiz() {
+            const nameInput = document.getElementById('user-name').value.trim();
+            const errDom = document.getElementById('name-error');
+            
+            if(!nameInput) {
+                errDom.classList.remove('hidden');
+                return;
+            }
+            errDom.classList.add('hidden');
+            userName = nameInput;
+
+            // 重置狀態
+            currentIndex = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            elScoreDisplay.innerText = "0";
+            
+            // 隨機選 10 題
+            let shuffled = shuffleArray([...allQuestions]);
+            currentQuiz = shuffled.slice(0, 10);
+
+            // 切換畫面
+            elStart.classList.add('hidden');
+            elResult.classList.add('hidden');
+            elQuestion.classList.remove('hidden');
+            elProgress.classList.remove('hidden');
+
+            renderQuestion();
+        }
+
+        // 渲染題目
+        function renderQuestion() {
+            answered = false;
+            elFeedback.classList.add('hidden');
+            elNextBtn.classList.add('hidden');
+            elQCurrent.innerText = currentIndex + 1;
+            
+            const qData = currentQuiz[currentIndex];
+            elQText.innerText = qData.q;
+            
+            elOptions.innerHTML = '';
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 md:p-5 bg-slate-600 hover:bg-slate-500 rounded-2xl text-lg md:text-xl font-nunito transition-colors border-2 border-transparent";
+                btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
+                btn.onclick = () => checkAnswer(idx, btn);
+                elOptions.appendChild(btn);
+            });
+        }
+
+        // 檢查答案
+        function checkAnswer(selectedIdx, btnElement) {
+            if (answered) return;
+            answered = true;
+
+            const qData = currentQuiz[currentIndex];
+            const isCorrect = (selectedIdx === qData.answer);
+            
+            // 鎖定所有按鈕並標示正確/錯誤
+            const buttons = elOptions.querySelectorAll('button');
+            buttons.forEach((btn, idx) => {
+                btn.onclick = null; 
+                btn.classList.remove('hover:bg-slate-500');
+                if (idx === qData.answer) {
+                    btn.classList.replace('bg-slate-600', 'bg-green-600/50');
+                    btn.classList.replace('border-transparent', 'border-green-400');
+                } else if (idx === selectedIdx && !isCorrect) {
+                    btn.classList.replace('bg-slate-600', 'bg-red-600/50');
+                    btn.classList.replace('border-transparent', 'border-red-400');
+                } else {
+                    btn.classList.add('opacity-50');
+                }
+            });
+
+            // 更新分數與回饋
+            elFeedback.classList.remove('hidden');
+            if (isCorrect) {
+                score += 10;
+                correctCount++;
+                elScoreDisplay.innerText = score;
+                elFeedback.classList.replace('border-red-400', 'border-green-400');
+                elFeedback.classList.replace('bg-red-900/30', 'bg-green-900/30');
+                elFeedbackMsg.innerText = "🎉 答對了！魔術能量 +10";
+                elFeedbackMsg.className = "text-2xl md:text-3xl font-bold font-mali text-green-400";
+            } else {
+                wrongCount++;
+                elFeedback.classList.replace('border-green-400', 'border-red-400');
+                elFeedback.classList.replace('bg-green-900/30', 'bg-red-900/30');
+                elFeedbackMsg.innerText = "❌ 答錯了！回文章找證據，再試一次！";
+                elFeedbackMsg.className = "text-2xl md:text-3xl font-bold font-mali text-red-400";
+            }
+            
+            elFeedbackExplain.innerText = `解析：${qData.explain}`;
+            elNextBtn.classList.remove('hidden');
+
+            if (currentIndex === currentQuiz.length - 1) {
+                elNextBtn.innerText = "查看結果與上傳成績 🏆";
+            } else {
+                elNextBtn.innerText = "下一題 ➡️";
+            }
+        }
+
+        // 下一題
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < currentQuiz.length) {
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // 顯示結果並傳送資料
+        function showResult() {
+            elQuestion.classList.add('hidden');
+            elProgress.classList.add('hidden');
+            elResult.classList.remove('hidden');
+
+            document.getElementById('display-name').innerText = userName;
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('correct-count').innerText = correctCount;
+            document.getElementById('wrong-count').innerText = wrongCount;
+
+            let title = "";
+            if (score >= 90) {
+                title = "✨ 閱讀魔術師 ✨";
+            } else if (score >= 70) {
+                title = "🕵️ 證據偵探 🕵️";
+            } else if (score >= 50) {
+                title = "📚 語文練習生 📚";
+            } else {
+                title = "💪 再挑戰勇者 💪";
+            }
+            document.getElementById('title-display').innerText = title;
+
+            // 呼叫上傳函數
+            uploadDataToGAS();
+        }
+
+        // 傳送資料至 Google Sheets
+        function uploadDataToGAS() {
+            const statusDom = document.getElementById('upload-status');
+            
+            if(GAS_URL === "在此貼上你的_GAS_網頁應用程式網址") {
+                statusDom.innerHTML = "⚠️ 未設定 Google Sheets 網址，成績僅顯示於此畫面。";
+                statusDom.className = "mt-4 text-sm text-yellow-300 bg-yellow-900/30 py-2 px-4 rounded-full inline-block";
+                return;
+            }
+
+            statusDom.innerHTML = "⏳ 正在將成績登記到雲端...";
+            statusDom.className = "mt-4 text-sm text-blue-300 bg-blue-900/30 py-2 px-4 rounded-full inline-block";
+
+            // 準備上傳的資料
+            const payload = {
+                name: userName,
+                score: score,
+                correct: correctCount,
+                wrong: wrongCount
+            };
+
+            // 使用 fetch 送出 (no-cors 模式解決跨網域問題)
+            fetch(GAS_URL, {
+                method: "POST",
+                mode: "no-cors", 
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                // 因為使用 no-cors，無法獲得伺服器實際回應狀態，只要沒報錯就視為發送成功
+                statusDom.innerHTML = "✅ 成績已成功傳送至雲端！";
+                statusDom.className = "mt-4 text-sm text-green-300 bg-green-900/30 py-2 px-4 rounded-full inline-block";
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                statusDom.innerHTML = "❌ 傳送失敗，請檢查網路連線。";
+                statusDom.className = "mt-4 text-sm text-red-300 bg-red-900/30 py-2 px-4 rounded-full inline-block";
+            });
+        }
+
+        // 重置測驗
+        function resetQuiz() {
+            elResult.classList.add('hidden');
+            elStart.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
